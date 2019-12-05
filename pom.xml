@@ -27,6 +27,8 @@
 		<module>mqas-dto</module>
 		<module>mqas-domain</module>
 		<module>mqas-data</module>
+		<module>mqas-web-service</module>
+		<module>mqas-web-business</module>
 	</modules>
 
 	<dependencyManagement>
@@ -34,16 +36,41 @@
 		<dependencies>
 
 			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter</artifactId>
-			</dependency>
-
-			<dependency>
 				<groupId>org.webjars</groupId>
 				<artifactId>bootstrap</artifactId>
 				<version>3.3.7-1</version>
 			</dependency>
-
+			
+			<dependency>
+				<groupId>au.com.mqas</groupId>
+				<artifactId>mqas-data</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>au.com.mqas</groupId>
+				<artifactId>mqas-dto</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>au.com.mqas</groupId>
+				<artifactId>mqas-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>au.com.mqas</groupId>
+				<artifactId>mqas-web-business</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>au.com.mqas</groupId>
+				<artifactId>mqas-web-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 
