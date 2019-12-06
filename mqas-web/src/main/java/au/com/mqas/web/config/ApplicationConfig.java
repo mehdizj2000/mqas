@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "au.com.mqas.web")
+@ComponentScan(basePackages = "au.com.mqas")
 public class ApplicationConfig {
 
 	public static void main(String[] args) {
