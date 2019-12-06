@@ -40,37 +40,43 @@
 				<artifactId>bootstrap</artifactId>
 				<version>3.3.7-1</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>au.com.mqas</groupId>
 				<artifactId>mqas-data</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>au.com.mqas</groupId>
 				<artifactId>mqas-dto</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>au.com.mqas</groupId>
 				<artifactId>mqas-domain</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>au.com.mqas</groupId>
 				<artifactId>mqas-web-business</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>au.com.mqas</groupId>
 				<artifactId>mqas-web-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

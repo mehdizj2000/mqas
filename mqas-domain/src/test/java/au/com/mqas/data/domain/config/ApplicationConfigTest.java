@@ -1,4 +1,4 @@
-package au.com.mqas.domain.config;
+package au.com.mqas.data.domain.config;
 
 import static org.junit.Assert.*;
 
