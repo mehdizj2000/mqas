@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-//@ContextConfiguration(classes = ApplicationConfig.class)
 @Slf4j
 public class UserInfoRepoTest {
 

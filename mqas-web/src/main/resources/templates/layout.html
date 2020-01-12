@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>layout</title>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.js}"></script>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.css}" />
+
+</head>
+<body>
+	<div class="container">
+
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" th:href="@{/}"> Home </a>
+				<ul class="nav">
+					<li><a th:href="@{/}">Users</a></li>
+				</ul>
+			</div>
+			<h1 layout:fragment="header">Layout</h1>
+			<div layout:fragment="content">Fake Content</div>
+		</div>
+
+	</div>
+</body>
+</html>
