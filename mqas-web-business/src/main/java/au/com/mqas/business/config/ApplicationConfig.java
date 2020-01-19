@@ -1,11 +1,11 @@
-package au.com.mqas.business.web;
+package au.com.mqas.business.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "au.com.mqas.business")
+@ComponentScan(basePackages = {"au.com.mqas.business.impl","au.com.mqas.business.mapper"})
 public class ApplicationConfig {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package au.com.mqas.web;
+package au.com.mqas.web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +28,16 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http
 	    	.authorizeRequests()
 	    	.antMatchers("/webjars/**").permitAll()
+	    	.antMatchers("/", "/index", "/home").permitAll()
+	    	.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
 	    	.antMatchers("/delete/**").hasRole("ADMIN")
 	    	.anyRequest().authenticated()
 	    	.and()
 	    	.formLogin().loginPage("/loginCustom").permitAll().loginProcessingUrl("/doLogin")
+	    	.and()
+	    	.logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/")
+	    	.and()
+	    	.csrf().disable()
 	    	;
 	}// @formatter:on 
 

@@ -7,26 +7,8 @@
 <body>
 	<h1 layout:fragment="header">Users: View All</h1>
 	<div layout:fragment="content" class="container">
-		<div class="pull-right">
-			<a th:href="@{/(form)}">Create User</a>
-		</div>
-		<table class="table table-borders table-striped">
-			<thead>
-				<tr>
-					<td>User Name</td>
-					<td>Created</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${users.empty}">
-					<td colspan="2">No Users</td>
-				</tr>
-				<tr th:each="user : ${users}">
-					<td><a th:href="@{'/' + ${user.id}" th:text="${user.username}">username</a></td>
-					<td th:text="${#calendars.format(user.created)}">Jan 12, 2020 10:10:10 PM AEDT</td>
-				</tr>
-			</tbody>
-		</table>
+		<a th:href="@{/user/list}" >List Users</a>
+	
 	</div>
 
 </body>
