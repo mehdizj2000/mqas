@@ -12,20 +12,27 @@ import au.com.mqas.service.UserInfoService;
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
-    private UserInfoRepo userInfoRepo;
+	private UserInfoRepo userInfoRepo;
 
-    @Override
-    public List<UserInfo> listAllUsers() {
-	return userInfoRepo.findAll();
-    }
+	@Override
+	public List<UserInfo> listAllUsers() {
+		return userInfoRepo.findAll();
+	}
 
-    public UserInfoRepo getUserInfoRepo() {
-	return userInfoRepo;
-    }
+	@Override
+	public void deleteUser(UserInfo userInfo) {
 
-    @Autowired
-    public void setUserInfoRepo(UserInfoRepo userInfoRepo) {
-	this.userInfoRepo = userInfoRepo;
-    }
+		userInfoRepo.delete(userInfo);
+		
+	}
+	
+	public UserInfoRepo getUserInfoRepo() {
+		return userInfoRepo;
+	}
+
+	@Autowired
+	public void setUserInfoRepo(UserInfoRepo userInfoRepo) {
+		this.userInfoRepo = userInfoRepo;
+	}
 
 }

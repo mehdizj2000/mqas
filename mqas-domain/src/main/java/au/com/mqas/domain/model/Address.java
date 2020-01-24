@@ -26,8 +26,8 @@ public class Address extends AbstractItem {
 
 	private String country;
 
-	@OneToOne
-	@JoinColumn(name = "fk_user_id")
+	@OneToOne(mappedBy = "shippingAddress")
+//	@JoinColumn(name = "fk_user_id")
 	private UserInfo userInfo;
 
 }

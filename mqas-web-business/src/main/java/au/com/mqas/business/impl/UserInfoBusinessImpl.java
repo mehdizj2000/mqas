@@ -14,35 +14,44 @@ import au.com.mqas.transfer.data.dto.UserDto;
 @Component
 public class UserInfoBusinessImpl implements UserInfoBusiness {
 
-    private UserInfoService userInfoService;
-    
-    private UserMapper userMapper;
+	private UserInfoService userInfoService;
 
-    @Override
-    public List<UserDto> listAllUsers() {
+	private UserMapper userMapper;
 
-	List<UserInfo> userInfos = userInfoService.listAllUsers();
+	@Override
+	public List<UserDto> listAllUsers() {
+
+		List<UserInfo> userInfos = userInfoService.listAllUsers();
+
+		return userMapper.userInfosToUserDtos(userInfos);
+
+	}
 	
-	return userMapper.userInfosToUserDtos(userInfos);
+	@Override
+	public void deleteUser(Long uid) {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setId(uid);
+		
+		userInfoService.deleteUser(userInfo);
+		
+	}
 
-    }
+	public UserInfoService getUserInfoService() {
+		return userInfoService;
+	}
 
-    public UserInfoService getUserInfoService() {
-	return userInfoService;
-    }
+	@Autowired
+	public void setUserInfoService(UserInfoService userInfoService) {
+		this.userInfoService = userInfoService;
+	}
 
-    @Autowired
-    public void setUserInfoService(UserInfoService userInfoService) {
-	this.userInfoService = userInfoService;
-    }
+	public UserMapper getUserMapper() {
+		return userMapper;
+	}
 
-    public UserMapper getUserMapper() {
-	return userMapper;
-    }
-
-    @Autowired
-    public void setUserMapper(UserMapper userMapper) {
-	this.userMapper = userMapper;
-    }
+	@Autowired
+	public void setUserMapper(UserMapper userMapper) {
+		this.userMapper = userMapper;
+	}
 
 }

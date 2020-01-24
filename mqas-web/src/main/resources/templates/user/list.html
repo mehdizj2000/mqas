@@ -17,16 +17,18 @@
 					<td>User Name</td>
 					<td>Created</td>
 					<td>Post Code</td>
+					<td>Actions</td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:if="${users.empty}">
-					<td colspan="3">No Users</td>
+					<td colspan="4">No Users</td>
 				</tr>
 				<tr th:each="user : ${users}">
 					<td><a th:href="@{'/' + ${user.id}}" th:text="${user.firstName}">username</a></td>
 					<td th:text="${#calendars.format(user.creationTime)}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td th:text="${user.shippingAddress.postCode}">Jan 12, 2020 10:10:10 PM AEDT</td>
+					<td><a class="glyphicon glyphicon-trash" th:href="@{'/user/delete/' + ${user.id}}"></a></td>
 					<!-- <div th:text="${user}">empty</div> -->
 				</tr>
 			</tbody>

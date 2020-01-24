@@ -8,4 +8,6 @@ public interface UserInfoService {
 
     List<UserInfo> listAllUsers();
 
+	void deleteUser(UserInfo userInfo);
+
 }

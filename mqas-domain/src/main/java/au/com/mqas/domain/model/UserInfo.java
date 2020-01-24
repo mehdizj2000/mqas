@@ -1,6 +1,9 @@
 package au.com.mqas.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
@@ -23,7 +26,8 @@ public class UserInfo extends AbstractItem {
 
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	@OneToOne(mappedBy = "userInfo")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(columnDefinition = "fk_add_id")
 	private Address shippingAddress;
 
 }

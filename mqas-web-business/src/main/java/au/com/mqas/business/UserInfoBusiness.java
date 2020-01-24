@@ -5,7 +5,9 @@ import java.util.List;
 import au.com.mqas.transfer.data.dto.UserDto;
 
 public interface UserInfoBusiness {
-    
-    List<UserDto> listAllUsers();
+
+	List<UserDto> listAllUsers();
+
+	void deleteUser(Long uid);
 
 }
