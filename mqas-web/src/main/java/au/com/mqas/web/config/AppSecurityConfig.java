@@ -13,24 +13,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @Configuration
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
-		// @formatter:off
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
+	// @formatter:off
  		builder.inMemoryAuthentication()
  			.withUser("mehdi").password(passwordEncoder().encode("mehdi")).roles("USER");
 		// @formatter:on		
-	}
-	
-	// @formatter:off
+    }
+
+    // @formatter:off
  	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	    http
 	    	.authorizeRequests()
-	    	.antMatchers("/webjars/**").permitAll()
+	    	.antMatchers("/webjars/**", "/static/**").permitAll()
 	    	.antMatchers("/", "/index", "/home").permitAll()
 	    	.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-	    	.antMatchers("/delete/**").hasRole("ADMIN")
 	    	.anyRequest().authenticated()
 	    	.and()
 	    	.formLogin().loginPage("/loginCustom").permitAll().loginProcessingUrl("/doLogin")
@@ -41,9 +40,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    	;
 	}// @formatter:on 
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(15);
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+	return new BCryptPasswordEncoder(15);
+    }
 
 }

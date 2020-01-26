@@ -10,4 +10,8 @@ public interface UserInfoBusiness {
 
 	void deleteUser(Long uid);
 
+	UserDto findUserById(Long uid);
+
+	UserDto updateUser(Long uid, UserDto user);
+
 }

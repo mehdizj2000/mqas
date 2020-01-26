@@ -13,7 +13,7 @@ import lombok.ToString;
 public class AddressDto extends AbstractDto {
 
     @Getter(onMethod_ = @JsonProperty(value = "address_line_1"))
-    private String addrresLine1;
+    private String addressLine1;
 
     @Getter(onMethod_ = @JsonProperty(value = "address_line_2"))
     private String addressLine2;

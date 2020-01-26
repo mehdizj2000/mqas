@@ -1,7 +1,6 @@
 package au.com.mqas.domain.model;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
@@ -14,7 +13,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Address extends AbstractItem {
 
-	private String addrresLine1;
+	private String addressLine1;
 
 	private String addressLine2;
 

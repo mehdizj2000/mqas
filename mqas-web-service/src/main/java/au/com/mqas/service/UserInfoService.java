@@ -10,4 +10,8 @@ public interface UserInfoService {
 
 	void deleteUser(UserInfo userInfo);
 
+	UserInfo findUserById(Long uid);
+
+	UserInfo saveUser(UserInfo existingUser);
+
 }

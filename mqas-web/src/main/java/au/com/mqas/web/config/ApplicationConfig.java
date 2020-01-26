@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "au.com.mqas")
 public class ApplicationConfig {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApplicationConfig.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(ApplicationConfig.class, args);
+    }
 
 }

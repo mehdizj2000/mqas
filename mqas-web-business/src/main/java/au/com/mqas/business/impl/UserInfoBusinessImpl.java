@@ -14,44 +14,62 @@ import au.com.mqas.transfer.data.dto.UserDto;
 @Component
 public class UserInfoBusinessImpl implements UserInfoBusiness {
 
-	private UserInfoService userInfoService;
+    private UserInfoService userInfoService;
 
-	private UserMapper userMapper;
+    private UserMapper userMapper;
 
-	@Override
-	public List<UserDto> listAllUsers() {
+    @Override
+    public List<UserDto> listAllUsers() {
 
-		List<UserInfo> userInfos = userInfoService.listAllUsers();
+	List<UserInfo> userInfos = userInfoService.listAllUsers();
 
-		return userMapper.userInfosToUserDtos(userInfos);
+	return userMapper.userInfosToUserDtos(userInfos);
 
-	}
-	
-	@Override
-	public void deleteUser(Long uid) {
-		UserInfo userInfo = new UserInfo();
-		userInfo.setId(uid);
-		
-		userInfoService.deleteUser(userInfo);
-		
-	}
+    }
 
-	public UserInfoService getUserInfoService() {
-		return userInfoService;
-	}
+    @Override
+    public void deleteUser(Long uid) {
 
-	@Autowired
-	public void setUserInfoService(UserInfoService userInfoService) {
-		this.userInfoService = userInfoService;
-	}
+	UserInfo userInfo = new UserInfo();
+	userInfo.setId(uid);
+	userInfoService.deleteUser(userInfo);
 
-	public UserMapper getUserMapper() {
-		return userMapper;
-	}
+    }
 
-	@Autowired
-	public void setUserMapper(UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
+    @Override
+    public UserDto findUserById(Long uid) {
+
+	UserInfo info = userInfoService.findUserById(uid);
+	return userMapper.userInfoToUserDto(info);
+
+    }
+
+    @Override
+    public UserDto updateUser(Long uid, UserDto user) {
+
+	UserInfo newUserInfo = userMapper.userDtoToUserInfo(user);
+
+	UserInfo savedUserInfo = userInfoService.saveUser(newUserInfo);
+
+	return userMapper.userInfoToUserDto(savedUserInfo);
+    }
+
+    public UserInfoService getUserInfoService() {
+	return userInfoService;
+    }
+
+    @Autowired
+    public void setUserInfoService(UserInfoService userInfoService) {
+	this.userInfoService = userInfoService;
+    }
+
+    public UserMapper getUserMapper() {
+	return userMapper;
+    }
+
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+	this.userMapper = userMapper;
+    }
 
 }

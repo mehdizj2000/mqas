@@ -3,6 +3,7 @@ package au.com.mqas.domain.model;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,22 +17,25 @@ import lombok.Data;
 @Data
 public abstract class AbstractItem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private ZonedDateTime creationTime;
+    @Column(updatable = false, nullable = false)
+    private ZonedDateTime creationTime;
 
-	private ZonedDateTime modifiedTime;
+    private ZonedDateTime modifiedTime;
 
-	@PrePersist
-	public void preInsert() {
-		creationTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-	}
+    @PrePersist
+    public void preInsert() {
+	if (creationTime == null)
+	    creationTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
+    }
 
-	@PreUpdate
-	public void preUpdate() {
-		modifiedTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-	}
+    @PreUpdate
+    public void preUpdate() {
+	if (modifiedTime == null)
+	    modifiedTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
+    }
 
 }
