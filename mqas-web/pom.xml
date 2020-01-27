@@ -49,7 +49,7 @@
 
 		<dependency>
 			<groupId>au.com.mqas</groupId>
-			<artifactId>mqas-web-business</artifactId>
+			<artifactId>mqas-logic</artifactId>
 		</dependency>
 
 		<dependency>

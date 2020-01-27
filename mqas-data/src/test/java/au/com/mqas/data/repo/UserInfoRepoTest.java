@@ -12,14 +12,17 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import au.com.mqas.domain.model.Address;
-import au.com.mqas.domain.model.UserInfo;
+import au.com.mqas.data.JpaConfig;
+import au.com.mqas.db.data.model.Address;
+import au.com.mqas.db.data.model.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@ContextConfiguration(classes = {JpaConfig.class})
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Slf4j
 public class UserInfoRepoTest {

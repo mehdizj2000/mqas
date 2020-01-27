@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import au.com.mqas.business.UserInfoBusiness;
+import au.com.mqas.logic.business.UserInfoBusiness;
 import au.com.mqas.transfer.data.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 

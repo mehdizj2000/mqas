@@ -7,8 +7,8 @@
 		<artifactId>mqas</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>mqas-web-service</artifactId>
-	<name>mqas-web-service</name>
+	<artifactId>mqas-adapter</artifactId>
+	<name>mqas-adapter</name>
 
 	<properties>
 		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>

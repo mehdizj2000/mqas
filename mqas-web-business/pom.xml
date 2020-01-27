@@ -7,8 +7,8 @@
 		<artifactId>mqas</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>mqas-web-business</artifactId>
-	<name>mqas-web-business</name>
+	<artifactId>mqas-logic</artifactId>
+	<name>mqas-logic</name>
 
 	<properties>
 		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
@@ -22,7 +22,7 @@
 
 		<dependency>
 			<groupId>au.com.mqas</groupId>
-			<artifactId>mqas-web-service</artifactId>
+			<artifactId>mqas-adapter</artifactId>
 		</dependency>
 
 		<dependency>
