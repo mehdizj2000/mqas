@@ -7,79 +7,77 @@
 <body>
 	<h1 layout:fragment="header">Update User</h1>
 	<div layout:fragment="content" class="container">
-		<form th:action="@{'/user/modify/' + ${user.id}}" th:object="${user}" action="#" method="post" class="form-horizontal">
+		<form th:action="@{/user/save/(form)}" th:object="${user}" action="#" method="post" class="form-horizontal">
 			<!-- <div class="pull-right">
 				<a class="btn btn-info" th:href="@{/user/create}">Create User</a>
 			</div> -->
 			<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-				<p th:each="error : ${#fields.error(*)}" th:text="${error}">Validation Error</p>
+				<p th:each="error : ${#fields.hasErrors('*')}" th:text="${error}">Validation Error</p>
 			</div>
-
-
 
 			<input type="hidden" th:field="*{id}">
 			<input type="hidden" th:field="*{shippingAddress.id}">
 
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="firstName">First Name:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{firstName}" class="form-control" th:class="${#fields.hasErrors('firstName')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{firstName}" class="form-control">
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('lastName')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="lastName">Last Name:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{lastName}" class="form-control" th:class="${#fields.hasErrors('lastName')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{lastName}" class="form-control">
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="email">email:</label>
 				<div class="col-xs-4">
-					<input type="email" th:field="*{email}" class="form-control" th:class="${#fields.hasErrors('email')} ? 'field-error':'form-control' ">
+					<input type="email" th:field="*{email}" class="form-control">
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('shippingAddress.addressLine1')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="shippingAddress.addressLine1">Address Line 1:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{shippingAddress.addressLine1}" class="form-control" th:class="${#fields.hasErrors('shippingAddress.addressLine1')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{shippingAddress.addressLine1}" class="form-control">
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('shippingAddress.addressLine2')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="shippingAddress.addressLine2">Address Line 2:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{shippingAddress.addressLine2}" class="form-control" th:class="${#fields.hasErrors('shippingAddress.addressLine2')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{shippingAddress.addressLine2}" class="form-control">
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('shippingAddress.town')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="shippingAddress.town">Town/City:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{shippingAddress.town}" class="form-control" th:class="${#fields.hasErrors('shippingAddress.town')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{shippingAddress.town}" class="form-control">
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('shippingAddress.postCode')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="shippingAddress.postCode">PostCode:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{shippingAddress.postCode}" class="form-control" th:class="${#fields.hasErrors('shippingAddress.postCode')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{shippingAddress.postCode}" class="form-control">
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" th:classappend="${#fields.hasErrors('shippingAddress.state')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="shippingAddress.postCode">State:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{shippingAddress.state}" class="form-control" th:class="${#fields.hasErrors('shippingAddress.state')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{shippingAddress.state}" class="form-control" >
 				</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group"th:classappend="${#fields.hasErrors('shippingAddress.country')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="shippingAddress.country">State:</label>
 				<div class="col-xs-4">
-					<input type="text" th:field="*{shippingAddress.country}" class="form-control" th:class="${#fields.hasErrors('shippingAddress.country')} ? 'field-error':'form-control' ">
+					<input type="text" th:field="*{shippingAddress.country}" class="form-control" >
 				</div>
 			</div>
 			

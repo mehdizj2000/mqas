@@ -45,7 +45,7 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
     }
 
     @Override
-    public UserDto updateUser(Long uid, UserDto user) {
+    public UserDto saveUser(UserDto user) {
 
 	UserInfo newUserInfo = userMapper.userDtoToUserInfo(user);
 

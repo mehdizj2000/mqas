@@ -10,6 +10,7 @@
 		<div class="pull-right">
 			<a class="btn btn-info" th:href="@{'/user/modify/' + ${user.id}}">Update User</a>
 		</div>
+		<div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">Some Message</div>
 		<div class="row">
 			<dl class="dl-horizontal">
 

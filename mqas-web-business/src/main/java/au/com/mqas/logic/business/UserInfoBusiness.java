@@ -12,6 +12,6 @@ public interface UserInfoBusiness {
 
     UserDto findUserById(Long uid);
 
-    UserDto updateUser(Long uid, UserDto user);
+    UserDto saveUser(UserDto user);
 
 }
