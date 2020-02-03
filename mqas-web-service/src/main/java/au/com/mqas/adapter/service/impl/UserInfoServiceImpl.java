@@ -41,7 +41,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	if (userInfo.getId() != null)
 	    userInfoRepo.findById(userInfo.getId())
 		    .orElseThrow(() -> new UserException("User with the provided id is not found"));
-	if (userInfo.getShippingAddress().getId() != null)
+	if (userInfo.getShippingAddress() != null && userInfo.getShippingAddress().getId() != null)
 	    addressRepo.findById(userInfo.getShippingAddress().getId())
 		    .orElseThrow(() -> new AddressException("User with the provided id is not found"));
 

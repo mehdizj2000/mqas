@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import au.com.mqas.adapter.service.UserInfoService;
 import au.com.mqas.db.data.model.UserInfo;
 import au.com.mqas.logic.business.UserInfoBusiness;
+import au.com.mqas.logic.business.mapper.LoginUserMapper;
 import au.com.mqas.logic.business.mapper.UserMapper;
+import au.com.mqas.transfer.data.dto.LoginUserDto;
 import au.com.mqas.transfer.data.dto.UserDto;
 
 @Component
@@ -17,6 +19,8 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
     private UserInfoService userInfoService;
 
     private UserMapper userMapper;
+    
+    private LoginUserMapper loginUserMapper;
 
     @Override
     public List<UserDto> listAllUsers() {
@@ -53,6 +57,16 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
 
 	return userMapper.userInfoToUserDto(savedUserInfo);
     }
+    
+    @Override
+    public UserDto registerUser(LoginUserDto user) {
+
+	UserInfo newUserInfo = getLoginUserMapper().loginUserDtoToUserInfo(user);
+
+	UserInfo savedUserInfo = userInfoService.saveUser(newUserInfo);
+
+	return userMapper.userInfoToUserDto(savedUserInfo);
+    }
 
     public UserInfoService getUserInfoService() {
 	return userInfoService;
@@ -70,6 +84,15 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
 	this.userMapper = userMapper;
+    }
+
+    public LoginUserMapper getLoginUserMapper() {
+	return loginUserMapper;
+    }
+
+    @Autowired
+    public void setLoginUserMapper(LoginUserMapper loginUserMapper) {
+	this.loginUserMapper = loginUserMapper;
     }
 
 }

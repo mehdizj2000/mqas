@@ -83,11 +83,6 @@ public class UserController {
 	return "/user/form";
     }
 
-    @GetMapping("loginCustom")
-    public String loginPage() {
-	return "loginPage";
-    }
-
     public UserInfoBusiness getUserInfoBusiness() {
 	return userInfoBusiness;
     }

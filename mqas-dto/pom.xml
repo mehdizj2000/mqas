@@ -41,6 +41,11 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		
 		<!-- for later removal -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>

@@ -4,8 +4,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -31,10 +29,12 @@ public class UserDto extends AbstractDto {
 
     @Getter(onMethod_ = @Email)
     private String email;
+    
+//    private LocalDate dateOfBirth;
 
     @JsonIgnore
     private String password;
-
+    
     @Getter(onMethod_ = @JsonProperty(value = "shipping_address"))
     private AddressDto shippingAddress;
 

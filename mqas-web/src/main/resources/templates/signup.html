@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Login Page</title>
+
+</head>
+<body>
+	<h1 layout:fragment="header">SignUp Page</h1>
+	<div layout:fragment="content" class="container">
+
+		<form th:action="@{/register}" method="post" th:object="${loginUser}" class="form-horizontal">
+
+			<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+				<p th:each="error : ${#fields.allErrors()}" th:text="${error}">something wrong happened</p>
+			</div>
+
+			<div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">Success!!!</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+				<label class="control-label col-xs-2" for="email"> Email: </label>
+				<div class="col-xs-2">
+					<input type="email" th:field="*{email}" class="form-control" />
+				</div>
+			</div>
+
+
+			<div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+				<label class="control-label col-xs-2"> Password: </label>
+				<div class="col-xs-2">
+					<input type="password" th:field="*{password}" class="form-control"/>
+				</div>
+			</div>
+
+			<div class="form-group" th:classappend="${#fields.hasErrors('passwordConfirmation')} ? 'has-error'">
+				<label class="control-label col-xs-2"> re-password: </label>
+				<div class="col-xs-2">
+					<input type="password" th:field="*{passwordConfirmation}" class="form-control"/>
+				</div>
+			</div>
+
+			<div class="form-actions col-xs-offset-2 col-xs-2">
+				<input type="submit" class="btn btn-primary" value="Sign In" />
+			</div>
+
+		</form>
+	</div>
+</body>
+</html>
