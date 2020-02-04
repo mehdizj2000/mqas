@@ -1,8 +1,12 @@
 package au.com.mqas.transfer.data.dto;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,17 +24,19 @@ import lombok.ToString;
 public class UserDto extends AbstractDto {
 
     @Getter(onMethod_ = {@JsonProperty(value = "first_name")})
-    @NotNull
     @NotEmpty
     private String firstName;
 
     @Getter(onMethod_ = @JsonProperty(value = "last_name"))
+    @NotEmpty
     private String lastName;
 
-    @Getter(onMethod_ = @Email)
+    @NotEmpty
     private String email;
     
-//    private LocalDate dateOfBirth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotEmpty
+    private LocalDate dateOfBirth;
 
     @JsonIgnore
     private String password;

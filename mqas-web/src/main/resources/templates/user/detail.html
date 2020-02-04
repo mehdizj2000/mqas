@@ -25,6 +25,9 @@
 
 				<dt>EMail</dt>
 				<dd id="id" th:text="${user.email}">123456</dd>
+				
+				<dt>Birth Date</dt>
+				<dd id="id" th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">123456</dd>
 
 				<dt>Creation Time</dt>
 				<dd id="id" th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>

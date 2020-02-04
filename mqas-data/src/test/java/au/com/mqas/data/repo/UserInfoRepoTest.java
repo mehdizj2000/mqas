@@ -1,5 +1,6 @@
 package au.com.mqas.data.repo;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -84,6 +85,7 @@ public class UserInfoRepoTest {
 	info1.setFirstName("Mehdi1");
 	info1.setLastName("Jorshari1");
 	info1.setPassword("7845121");
+	info1.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info1.setShippingAddress(address1);
 
 	UserInfo info2 = new UserInfo();
@@ -91,6 +93,7 @@ public class UserInfoRepoTest {
 	info2.setFirstName("Mehdi2");
 	info2.setLastName("Jorshar2");
 	info2.setPassword("7845122");
+	info2.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info2.setShippingAddress(address2);
 
 	UserInfo info3 = new UserInfo();
@@ -98,6 +101,7 @@ public class UserInfoRepoTest {
 	info3.setFirstName("Mehdi3");
 	info3.setLastName("Jorshari3");
 	info3.setPassword("7845123");
+	info3.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info3.setShippingAddress(address3);
 
 	UserInfo info4 = new UserInfo();
@@ -105,6 +109,7 @@ public class UserInfoRepoTest {
 	info4.setFirstName("Mehdi4");
 	info4.setLastName("Jorshari4");
 	info4.setPassword("7845124");
+	info4.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info4.setShippingAddress(address4);
 
 	UserInfo info5 = new UserInfo();
@@ -112,6 +117,7 @@ public class UserInfoRepoTest {
 	info5.setFirstName("Mehdi5");
 	info5.setLastName("Jorshari5");
 	info5.setPassword("7845125");
+	info5.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info5.setShippingAddress(address5);
 
 	userInfoRepo.saveAll(Arrays.asList(info1, info2, info3, info4, info5));

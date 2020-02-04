@@ -2,6 +2,10 @@ package au.com.mqas.adapter;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +33,7 @@ class MqasAdapterApplicationConfigTest {
 	userInfo.setFirstName("kazem");
 	userInfo.setLastName("pool-lazem");
 	userInfo.setPassword("123456");
+	userInfo.setDateOfBirth(LocalDate.of(1979, 9, 21));
 
 	Address address = new Address();
 	address.setAddressLine1("line1");

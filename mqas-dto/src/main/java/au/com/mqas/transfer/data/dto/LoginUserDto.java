@@ -1,9 +1,11 @@
 package au.com.mqas.transfer.data.dto;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 import au.com.mqas.transfer.validation.PasswordMatcher;
 import lombok.Data;
@@ -16,7 +18,9 @@ public class LoginUserDto {
     @NotEmpty(message = "Email is empty")
     private String email;
 
-//    private LocalDate dateOfBirth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotEmpty
+    private LocalDate dateOfBirth;
 
     @NotEmpty(message = "Password is empty")
     private String password;

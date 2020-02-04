@@ -1,6 +1,9 @@
 package au.com.mqas.db.data.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -20,7 +23,11 @@ public class UserInfo extends AbstractItem {
 
     private String lastName;
 
+    @Column(nullable = false)
     private String email;
+    
+    @Column(nullable = false)
+    private LocalDate dateOfBirth; 
 
     private String password;
 

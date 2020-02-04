@@ -16,14 +16,21 @@
 			</div>
 
 			<div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">Success!!!</div>
+			
 			<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="email"> Email: </label>
 				<div class="col-xs-2">
 					<input type="email" th:field="*{email}" class="form-control" />
 				</div>
 			</div>
-
-
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'has-error'">
+				<label class="control-label col-xs-2" for="dateOfBirth"> Date of Birth: </label>
+				<div class="col-xs-2">
+					<input type="date" th:field="*{dateOfBirth}" class="form-control" />
+				</div>
+			</div>
+			
 			<div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
 				<label class="control-label col-xs-2"> Password: </label>
 				<div class="col-xs-2">

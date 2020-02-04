@@ -17,6 +17,7 @@
 					<td>First Name</td>
 					<td>Last Name</td>
 					<td>EMail</td>
+					<td>Birth Date</td>
 					<td>Created</td>
 					<td>Modified</td>
 					<td>Actions</td>
@@ -24,12 +25,13 @@
 			</thead>
 			<tbody>
 				<tr th:if="${users.empty}">
-					<td colspan="5">No Users</td>
+					<td colspan="6">No Users</td>
 				</tr>
 				<tr th:each="user : ${users}">
 					<td><a th:href="@{'/user/view/' + ${user.id}}" th:text="${user.firstName}">username</a></td>
 					<td th:text="${user.lastName}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td th:text="${user.email}">Jan 12, 2020 10:10:10 PM AEDT</td>
+					<td th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td th:text="${#temporals.format(user.modifiedTime, 'dd-MM-yyyy hh:mm a')}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td><a class="glyphicon glyphicon-trash" th:href="@{'/user/delete/' + ${user.id}}"></a>
