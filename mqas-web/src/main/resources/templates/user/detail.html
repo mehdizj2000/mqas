@@ -15,25 +15,25 @@
 			<dl class="dl-horizontal">
 
 				<dt>ID</dt>
-				<dd id="id" th:text="${user.id}">123456</dd>
+				<dd id="user.id" th:text="${user.id}">123456</dd>
 
 				<dt>First Name</dt>
-				<dd id="id" th:text="${user.firstName}">123456</dd>
+				<dd id="user.firstName" th:text="${user.firstName}">123456</dd>
 
 				<dt>Last Name</dt>
-				<dd id="id" th:text="${user.lastName}">123456</dd>
+				<dd id="user.lastName" th:text="${user.lastName}">123456</dd>
 
 				<dt>EMail</dt>
-				<dd id="id" th:text="${user.email}">123456</dd>
+				<dd id="user.email" th:text="${user.email}">123456</dd>
 				
 				<dt>Birth Date</dt>
-				<dd id="id" th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">123456</dd>
+				<dd id="user.dateOfBirth" th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">123456</dd>
 
 				<dt>Creation Time</dt>
-				<dd id="id" th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>
+				<dd id="user.creationTime" th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>
 
 				<dt>Modified Time</dt>
-				<dd id="id" th:text="${#temporals.format(user.modifiedTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>
+				<dd id="user.modifiedTim" th:text="${#temporals.format(user.modifiedTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>
 
 				<dt>Line01</dt>
 				<dd id="id" th:text="${user.shippingAddress.addressLine1}">123456</dd>

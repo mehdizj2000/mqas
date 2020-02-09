@@ -20,6 +20,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private AddressRepo addressRepo;
 
+//    private VerificationTokenRepo verificationTokenRepo;
+//    
+//    private UserUpdateTokenRepo userUpdateTokenRepo;
+
     @Override
     public List<UserInfo> listAllUsers() {
 	return userInfoRepo.findAll();
@@ -38,13 +42,41 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo saveUser(UserInfo userInfo) {
-	if (userInfo.getId() != null)
-	    userInfoRepo.findById(userInfo.getId())
+
+	if (userInfo.getId() != null) {
+	    UserInfo existingUser = userInfoRepo.findById(userInfo.getId())
 		    .orElseThrow(() -> new UserException("User with the provided id is not found"));
+	    if(userInfo.getIsActive() == null)
+		userInfo.setIsActive(existingUser.getIsActive());
+	    if(userInfo.getPassword() == null)
+		userInfo.setPassword(existingUser.getPassword());
+	}
 	if (userInfo.getShippingAddress() != null && userInfo.getShippingAddress().getId() != null)
 	    addressRepo.findById(userInfo.getShippingAddress().getId())
 		    .orElseThrow(() -> new AddressException("User with the provided id is not found"));
 
+	UserInfo info = userInfoRepo.save(userInfo);
+//	if(userInfo.getId() == null) {
+//	    VerificationToken token = new VerificationToken();
+//	    token.setUserInfo(info);
+//	    verificationTokenRepo.save(token);
+//	} else {
+//	    UserUpdateToken token = new UserUpdateToken();
+//	    token.setUserInfo(info);
+//	    userUpdateTokenRepo.save(token);
+//	}
+
+	return info;
+    }
+
+    @Override
+    public Optional<UserInfo> findByEmail(String email) {
+	return userInfoRepo.findByEmail(email);
+    }
+
+    @Override
+    public UserInfo enableUser(UserInfo userInfo) {
+	userInfo.setIsActive(Boolean.TRUE);
 	return userInfoRepo.save(userInfo);
     }
 
@@ -65,5 +97,23 @@ public class UserInfoServiceImpl implements UserInfoService {
     public void setAddressRepo(AddressRepo addressRepo) {
 	this.addressRepo = addressRepo;
     }
+
+//    public VerificationTokenRepo getVerificationTokenRepo() {
+//	return verificationTokenRepo;
+//    }
+//
+//    @Autowired
+//    public void setVerificationTokenRepo(VerificationTokenRepo verificationTokenRepo) {
+//	this.verificationTokenRepo = verificationTokenRepo;
+//    }
+//
+//    public UserUpdateTokenRepo getUserUpdateTokenRepo() {
+//	return userUpdateTokenRepo;
+//    }
+//
+//    @Autowired
+//    public void setUserUpdateTokenRepo(UserUpdateTokenRepo userUpdateTokenRepo) {
+//	this.userUpdateTokenRepo = userUpdateTokenRepo;
+//    }
 
 }

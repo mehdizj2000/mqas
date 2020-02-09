@@ -1,6 +1,7 @@
 package au.com.mqas.adapter.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import au.com.mqas.db.data.model.UserInfo;
 
@@ -13,5 +14,9 @@ public interface UserInfoService {
     UserInfo findUserById(Long uid);
 
     UserInfo saveUser(UserInfo existingUser);
+
+    UserInfo enableUser(UserInfo userInfo);
+
+    Optional<UserInfo> findByEmail(String email);
 
 }

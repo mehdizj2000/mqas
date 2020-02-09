@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,27 +56,44 @@ public class UserController {
     public String presentUpdatePage(@PathVariable Long uid, Model model) {
 
 	UserDto userDto = userInfoBusiness.findUserById(uid);
-
+	
 	model.addAttribute("user", userDto);
 
 	return "user/form";
     }
 
     @PostMapping("/save")
-    public ModelAndView updateUser(@Valid @ModelAttribute("user")  UserDto user, BindingResult result,
+    public ModelAndView updateUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result,
 	    RedirectAttributes redirect) {
-	
-	if(result.hasErrors()) {
+
+	if (result.hasErrors()) {
 	    return new ModelAndView("user/form", "formErrors", result.getAllErrors());
 	}
 
 	UserDto userDto = userInfoBusiness.saveUser(user);
 
-	Long userId = user.getId() == null ? userDto.getId(): user.getId();
-	
+	Long userId = user.getId() == null ? userDto.getId() : user.getId();
+
 	redirect.addFlashAttribute("globalMessage", "All Good");
 
 	return new ModelAndView("redirect:/user/view/{user.id}", "user.id", userId);
+    }
+
+    @GetMapping("/confirmRegistration")
+    public String confirmRegistration(@RequestParam String token, RedirectAttributes redirect) {
+
+	UserDto userDto = null;
+	try {
+	    userDto = userInfoBusiness.verifyRegistrationToken(token);
+	} catch (Exception e) {
+	    redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
+	    return "redirect:/loginCustom";
+	}
+
+	userInfoBusiness.enableUser(userDto);
+
+	redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
+	return "redirect:/loginCustom";
     }
 
     @GetMapping("/create")

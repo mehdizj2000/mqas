@@ -3,6 +3,7 @@ package au.com.mqas.web.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,11 +15,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import au.com.mqas.logic.business.UserInfoBusiness;
 import au.com.mqas.transfer.data.dto.LoginUserDto;
-import au.com.mqas.transfer.data.dto.UserDto;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+    
+    private PasswordEncoder passwordEncoder;
 
     private UserInfoBusiness userInfoBusiness;
 
@@ -38,11 +40,14 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String registerNewUser(@ModelAttribute("loginUser") @Valid LoginUserDto loginUser, BindingResult result, RedirectAttributes redirect) {
+    public String registerNewUser(@ModelAttribute("loginUser") @Valid LoginUserDto loginUser, BindingResult result,
+	    RedirectAttributes redirect) {
 
-	if(result.hasErrors()) {
+	if (result.hasErrors()) {
 	    return "signup";
 	}
+	
+	loginUser.setPassword(passwordEncoder.encode(loginUser.getPassword()));
 	
 	/* UserDto userDto = */userInfoBusiness.registerUser(loginUser);
 
@@ -58,6 +63,15 @@ public class HomeController {
     @Autowired
     public void setUserInfoBusiness(UserInfoBusiness userInfoBusiness) {
 	this.userInfoBusiness = userInfoBusiness;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+	return passwordEncoder;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+	this.passwordEncoder = passwordEncoder;
     }
 
 }

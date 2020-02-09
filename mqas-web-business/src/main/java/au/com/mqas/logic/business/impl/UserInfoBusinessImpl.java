@@ -3,13 +3,17 @@ package au.com.mqas.logic.business.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
+import au.com.mqas.adapter.service.TokenService;
 import au.com.mqas.adapter.service.UserInfoService;
 import au.com.mqas.db.data.model.UserInfo;
+import au.com.mqas.db.data.model.VerificationToken;
 import au.com.mqas.logic.business.UserInfoBusiness;
 import au.com.mqas.logic.business.mapper.LoginUserMapper;
 import au.com.mqas.logic.business.mapper.UserMapper;
+import au.com.mqas.logic.event.RegistrationEvent;
 import au.com.mqas.transfer.data.dto.LoginUserDto;
 import au.com.mqas.transfer.data.dto.UserDto;
 
@@ -18,9 +22,13 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
 
     private UserInfoService userInfoService;
 
+    private TokenService<VerificationToken> verificationTokenService;
+
     private UserMapper userMapper;
-    
+
     private LoginUserMapper loginUserMapper;
+
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     public List<UserDto> listAllUsers() {
@@ -57,7 +65,7 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
 
 	return userMapper.userInfoToUserDto(savedUserInfo);
     }
-    
+
     @Override
     public UserDto registerUser(LoginUserDto user) {
 
@@ -65,7 +73,29 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
 
 	UserInfo savedUserInfo = userInfoService.saveUser(newUserInfo);
 
+	VerificationToken verificationToken = verificationTokenService.createToken(savedUserInfo);
+
+	RegistrationEvent registrationEvent = new RegistrationEvent(verificationToken);
+	eventPublisher.publishEvent(registrationEvent);
+
 	return userMapper.userInfoToUserDto(savedUserInfo);
+
+    }
+
+    @Override
+    public UserDto enableUser(UserDto user) {
+	UserInfo userInfo = getUserMapper().userDtoToUserInfo(user);
+
+	UserInfo enabledUserInfo = userInfoService.enableUser(userInfo);
+
+	return userMapper.userInfoToUserDto(enabledUserInfo);
+
+    }
+
+    @Override
+    public UserDto verifyRegistrationToken(String token) {
+	VerificationToken verificationToken = verificationTokenService.verifyToken(token);
+	return userMapper.userInfoToUserDto(verificationToken.getUserInfo());
     }
 
     public UserInfoService getUserInfoService() {
@@ -93,6 +123,24 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
     @Autowired
     public void setLoginUserMapper(LoginUserMapper loginUserMapper) {
 	this.loginUserMapper = loginUserMapper;
+    }
+
+    public TokenService<VerificationToken> getVerificationTokenService() {
+	return verificationTokenService;
+    }
+
+    @Autowired
+    public void setVerificationTokenService(TokenService<VerificationToken> verificationTokenService) {
+	this.verificationTokenService = verificationTokenService;
+    }
+
+    public ApplicationEventPublisher getEventPublisher() {
+	return eventPublisher;
+    }
+
+    @Autowired
+    public void setEventPublisher(ApplicationEventPublisher eventPublisher) {
+	this.eventPublisher = eventPublisher;
     }
 
 }

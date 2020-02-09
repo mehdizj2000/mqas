@@ -7,7 +7,7 @@ import au.com.mqas.transfer.data.dto.LoginUserDto;
 
 @Mapper(componentModel = "spring")
 public interface LoginUserMapper {
-    
+
     UserInfo loginUserDtoToUserInfo(LoginUserDto loginUserDto);
 
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,7 +21,8 @@ public class LoginUserDto {
     private String email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty
+    @NotNull
+    @Past
     private LocalDate dateOfBirth;
 
     @NotEmpty(message = "Password is empty")

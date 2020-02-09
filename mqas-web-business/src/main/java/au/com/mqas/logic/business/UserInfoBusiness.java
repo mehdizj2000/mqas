@@ -14,7 +14,11 @@ public interface UserInfoBusiness {
     UserDto findUserById(Long uid);
 
     UserDto saveUser(UserDto user);
-    
-    UserDto registerUser(LoginUserDto user); 
+
+    UserDto registerUser(LoginUserDto user);
+
+    UserDto verifyRegistrationToken(String token);
+
+    UserDto enableUser(UserDto user);
 
 }

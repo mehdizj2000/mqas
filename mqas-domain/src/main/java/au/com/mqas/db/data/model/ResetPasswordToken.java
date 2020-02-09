@@ -14,7 +14,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ResetPasswordToken extends AbstractItem {
+public class ResetPasswordToken extends AbstractItem implements Token {
 
     private String token;
 

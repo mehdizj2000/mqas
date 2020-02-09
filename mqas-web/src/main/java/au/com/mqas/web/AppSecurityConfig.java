@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -14,12 +15,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserDetailsService userDetailsService;
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
-	// @formatter:off
- 		builder.inMemoryAuthentication()
- 			.withUser("mehdi").password(passwordEncoder().encode("mehdi")).roles("USER");
-		// @formatter:on		
+
+	builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//	inMemoryAuthentication().withUser("mehdi").password(passwordEncoder().encode("mehdi")).roles("USER");
+
     }
 
     // @formatter:off
@@ -28,7 +31,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http
 	    	.authorizeRequests()
 	    	.antMatchers("/webjars/**", "/static/**").permitAll()
-	    	.antMatchers("/", "/index", "/home", "/register").permitAll()
+	    	.antMatchers("/", "/index", "/home", "/register", "/user/confirmRegistration").permitAll()
 	    	.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
 	    	.anyRequest().authenticated()
 	    	.and()
@@ -40,9 +43,19 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    	;
 	}// @formatter:on 
 
+    public UserDetailsService getUserDetailsService() {
+	return userDetailsService;
+    }
+
+    @Autowired
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+	this.userDetailsService = userDetailsService;
+    }
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
-	return new BCryptPasswordEncoder(15);
+	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+	return bCryptPasswordEncoder;
     }
 
 }

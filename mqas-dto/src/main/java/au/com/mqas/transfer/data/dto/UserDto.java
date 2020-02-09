@@ -2,9 +2,9 @@ package au.com.mqas.transfer.data.dto;
 
 import java.time.LocalDate;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,7 +23,7 @@ import lombok.ToString;
 @JsonRootName(value = "user")
 public class UserDto extends AbstractDto {
 
-    @Getter(onMethod_ = {@JsonProperty(value = "first_name")})
+    @Getter(onMethod_ = { @JsonProperty(value = "first_name") })
     @NotEmpty
     private String firstName;
 
@@ -33,14 +33,15 @@ public class UserDto extends AbstractDto {
 
     @NotEmpty
     private String email;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty
+    @NotNull
+    @Past
     private LocalDate dateOfBirth;
 
     @JsonIgnore
     private String password;
-    
+
     @Getter(onMethod_ = @JsonProperty(value = "shipping_address"))
     private AddressDto shippingAddress;
 
