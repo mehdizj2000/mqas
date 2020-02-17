@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -30,7 +29,7 @@ public class UserInfo extends AbstractItem {
 
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String email;
 
     @Column(nullable = false)
@@ -42,6 +41,12 @@ public class UserInfo extends AbstractItem {
     @Column(nullable = false)
     private Boolean isActive;
 
+    @Column(nullable = false)
+    private String securityQuestion;
+
+    @Column(nullable = false)
+    private String securityAnswer;
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -51,11 +56,6 @@ public class UserInfo extends AbstractItem {
     @PrePersist
     public void prePersist() {
 	isActive = false;
-    }
-    
-    @PreUpdate
-    public void preUpdate() {
-	
     }
 
 }

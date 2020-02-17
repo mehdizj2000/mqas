@@ -32,6 +32,8 @@ class MqasAdapterApplicationConfigTest {
 	userInfo.setLastName("pool-lazem");
 	userInfo.setPassword("123456");
 	userInfo.setDateOfBirth(LocalDate.of(1979, 9, 21));
+	userInfo.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	userInfo.setSecurityAnswer("jhdfsjh");
 
 	Address address = new Address();
 	address.setAddressLine1("line1");

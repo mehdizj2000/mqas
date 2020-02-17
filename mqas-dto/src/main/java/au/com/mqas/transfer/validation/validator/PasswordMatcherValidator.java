@@ -5,10 +5,10 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.apache.commons.lang3.StringUtils;
 
-import au.com.mqas.transfer.data.dto.LoginUserDto;
+import au.com.mqas.transfer.data.dto.PasswordDto;
 import au.com.mqas.transfer.validation.PasswordMatcher;
 
-public class PasswordMatcherValidator implements ConstraintValidator<PasswordMatcher, LoginUserDto> {
+public class PasswordMatcherValidator implements ConstraintValidator<PasswordMatcher, PasswordDto> {
 
     @Override
     public void initialize(PasswordMatcher constraintAnnotation) {
@@ -17,7 +17,7 @@ public class PasswordMatcherValidator implements ConstraintValidator<PasswordMat
     }
 
     @Override
-    public boolean isValid(LoginUserDto value, ConstraintValidatorContext context) {
+    public boolean isValid(PasswordDto value, ConstraintValidatorContext context) {
 	boolean isValid = StringUtils.equals(value.getPassword(), value.getPasswordConfirmation());
 //	if (!isValid) {
 //	    context.disableDefaultConstraintViolation();

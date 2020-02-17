@@ -3,6 +3,7 @@ package au.com.mqas.web.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import au.com.mqas.logic.business.UserInfoBusiness;
+import au.com.mqas.transfer.data.dto.ResetPasswordDto;
 import au.com.mqas.transfer.data.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    private PasswordEncoder passwordEncoder;
 
     private UserInfoBusiness userInfoBusiness;
 
@@ -56,7 +60,7 @@ public class UserController {
     public String presentUpdatePage(@PathVariable Long uid, Model model) {
 
 	UserDto userDto = userInfoBusiness.findUserById(uid);
-	
+
 	model.addAttribute("user", userDto);
 
 	return "user/form";
@@ -87,13 +91,51 @@ public class UserController {
 	    userDto = userInfoBusiness.verifyRegistrationToken(token);
 	} catch (Exception e) {
 	    redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
-	    return "redirect:/loginCustom";
+	    return "redirect:/login";
 	}
+	log.info("userDto: {}", userDto);
 
 	userInfoBusiness.enableUser(userDto);
 
 	redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
-	return "redirect:/loginCustom";
+	return "redirect:/login";
+    }
+
+    @GetMapping("/verifyPassword")
+    public ModelAndView verifyPassword(@RequestParam String token, RedirectAttributes redirect) {
+
+	ResetPasswordDto resetPasswordInfo = null;
+	try {
+	    resetPasswordInfo = userInfoBusiness.verifyResetPasswordToken(token);
+	} catch (Exception e) {
+	    redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
+	    return new ModelAndView("redirect:/login");
+	}
+	log.info("userDto: {}", resetPasswordInfo);
+
+	redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
+	return new ModelAndView("resetPassword", "resetPassInfo", resetPasswordInfo);
+    }
+
+    @GetMapping("/resetPassword")
+    public String resetPasswordForm(@ModelAttribute("resetPassInfo") ResetPasswordDto resetPassInfo) {
+	return "resetPassword";
+    }
+
+    @PostMapping("/resetPassword")
+    public ModelAndView resetPassword(@ModelAttribute("resetPassInfo") @Valid ResetPasswordDto resetPassDto,
+	    BindingResult result, RedirectAttributes redirect) {
+	if (result.hasErrors()) {
+	    return new ModelAndView("resetPassword", "formErrors", result.getAllErrors());
+	}
+
+	resetPassDto.setPassword(passwordEncoder.encode(resetPassDto.getPassword()));
+	
+	userInfoBusiness.resetPasswordForUser(resetPassDto);
+
+	redirect.addFlashAttribute("message", "Password Updated successfully. All is Good!!");
+
+	return new ModelAndView("redirect:/login");
     }
 
     @GetMapping("/create")
@@ -108,6 +150,15 @@ public class UserController {
     @Autowired
     public void setUserInfoBusiness(UserInfoBusiness userInfoBusiness) {
 	this.userInfoBusiness = userInfoBusiness;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+	return passwordEncoder;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+	this.passwordEncoder = passwordEncoder;
     }
 
 }

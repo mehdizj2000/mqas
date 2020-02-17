@@ -87,6 +87,8 @@ public class UserInfoRepoTest {
 	info1.setPassword("7845121");
 	info1.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info1.setShippingAddress(address1);
+	info1.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	info1.setSecurityAnswer("jhdfsjh");
 
 	UserInfo info2 = new UserInfo();
 	info2.setEmail("mehdi2@gmail.com");
@@ -95,6 +97,8 @@ public class UserInfoRepoTest {
 	info2.setPassword("7845122");
 	info2.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info2.setShippingAddress(address2);
+	info2.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	info2.setSecurityAnswer("jhdfsjh");
 
 	UserInfo info3 = new UserInfo();
 	info3.setEmail("mehdi3@gmail.com");
@@ -103,6 +107,8 @@ public class UserInfoRepoTest {
 	info3.setPassword("7845123");
 	info3.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info3.setShippingAddress(address3);
+	info3.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	info3.setSecurityAnswer("jhdfsjh");
 
 	UserInfo info4 = new UserInfo();
 	info4.setEmail("mehdi4@gmail.com");
@@ -111,6 +117,8 @@ public class UserInfoRepoTest {
 	info4.setPassword("7845124");
 	info4.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info4.setShippingAddress(address4);
+	info4.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	info4.setSecurityAnswer("jhdfsjh");
 
 	UserInfo info5 = new UserInfo();
 	info5.setEmail("mehdi5@gmail.com");
@@ -119,6 +127,8 @@ public class UserInfoRepoTest {
 	info5.setPassword("7845125");
 	info5.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info5.setShippingAddress(address5);
+	info5.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	info5.setSecurityAnswer("jhdfsjh");
 
 	userInfoRepo.saveAll(Arrays.asList(info1, info2, info3, info4, info5));
 

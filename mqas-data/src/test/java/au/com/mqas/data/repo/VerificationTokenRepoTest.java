@@ -37,7 +37,7 @@ class VerificationTokenRepoTest {
     }
 
     @Test
-    @Rollback(false)
+//    @Rollback(false)
     void testSave() {
 	Address address1 = new Address();
 	address1.setAddressLine1("1/57 South Street");
@@ -54,6 +54,8 @@ class VerificationTokenRepoTest {
 	info1.setPassword("7845121");
 	info1.setDateOfBirth(LocalDate.of(1979, 9, 21));
 	info1.setShippingAddress(address1);
+	info1.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+	info1.setSecurityAnswer("jhdfsjh");
 
 	userInfoRepo.save(info1);
 

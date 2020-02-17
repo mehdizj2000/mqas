@@ -1,5 +1,6 @@
 package au.com.mqas.adapter.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,9 +47,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	if (userInfo.getId() != null) {
 	    UserInfo existingUser = userInfoRepo.findById(userInfo.getId())
 		    .orElseThrow(() -> new UserException("User with the provided id is not found"));
-	    if(userInfo.getIsActive() == null)
+	    if (userInfo.getIsActive() == null)
 		userInfo.setIsActive(existingUser.getIsActive());
-	    if(userInfo.getPassword() == null)
+	    if (userInfo.getPassword() == null)
 		userInfo.setPassword(existingUser.getPassword());
 	}
 	if (userInfo.getShippingAddress() != null && userInfo.getShippingAddress().getId() != null)
@@ -67,6 +68,18 @@ public class UserInfoServiceImpl implements UserInfoService {
 //	}
 
 	return info;
+    }
+
+    @Override
+    public UserInfo validateEmailAndBirthDay(String email, LocalDate birthDate) {
+	return userInfoRepo.findByEmailAndDateOfBirth(email, birthDate)
+		.orElseThrow(() -> new UserException("User with the provided email is not found"));
+    }
+
+    @Override
+    public UserInfo validateUserBySecurityAnswer(Long id, String email, String secAnswer) {
+	return userInfoRepo.findByIdAndEmailAndSecurityAnswer(id, email, secAnswer)
+		.orElseThrow(() -> new UserException("User with the provided email and security answer is not found"));
     }
 
     @Override

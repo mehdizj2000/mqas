@@ -20,28 +20,42 @@
 			<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="email"> Email: </label>
 				<div class="col-xs-2">
-					<input type="email" th:field="*{email}" class="form-control" />
+					<input type="email" th:field="*{email}" class="form-control" required="required" placeholder="someone@somewhere.com" />
 				</div>
 			</div>
 			
 			<div class="form-group" th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'has-error'">
 				<label class="control-label col-xs-2" for="dateOfBirth"> Date of Birth: </label>
 				<div class="col-xs-2">
-					<input type="date" th:field="*{dateOfBirth}" class="form-control" />
+					<input type="date" th:field="*{dateOfBirth}" class="form-control" required="required" />
+				</div>
+			</div>
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('securityQuestion')} ? 'has-error'">
+				<label class="control-label col-xs-2" for="securityQuestion"> Security Question: </label>
+				<div class="col-xs-2">
+					<input type="text" th:field="*{securityQuestion}" class="form-control" required="required" />
+				</div>
+			</div>
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('securityAnswer')} ? 'has-error'">
+				<label class="control-label col-xs-2" for="securityAnswer"> Security Answer: </label>
+				<div class="col-xs-2">
+					<input type="text" th:field="*{securityAnswer}" class="form-control" required="required" />
 				</div>
 			</div>
 			
 			<div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
 				<label class="control-label col-xs-2"> Password: </label>
 				<div class="col-xs-2">
-					<input type="password" th:field="*{password}" class="form-control"/>
+					<input type="password" th:field="*{password}" class="form-control" placeholder="**********" required="required"/>
 				</div>
 			</div>
 
 			<div class="form-group" th:classappend="${#fields.hasErrors('passwordConfirmation')} ? 'has-error'">
 				<label class="control-label col-xs-2"> re-password: </label>
 				<div class="col-xs-2">
-					<input type="password" th:field="*{passwordConfirmation}" class="form-control"/>
+					<input type="password" th:field="*{passwordConfirmation}" class="form-control" placeholder="**********" required="required"/>
 				</div>
 			</div>
 

@@ -16,6 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
+    
+    public AppSecurityConfig(UserDetailsService userDetailsService) {
+	super();
+	this.userDetailsService = userDetailsService;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
@@ -31,13 +36,15 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http
 	    	.authorizeRequests()
 	    	.antMatchers("/webjars/**", "/static/**").permitAll()
-	    	.antMatchers("/", "/index", "/home", "/register", "/user/confirmRegistration").permitAll()
+	    	.antMatchers("/", "/index", "/home", "/register", "/user/confirmRegistration", "/user/resetPassword", "/user/verifyPassword", "/forgotPassword").permitAll()
 	    	.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
 	    	.anyRequest().authenticated()
 	    	.and()
-	    	.formLogin().loginPage("/loginCustom").permitAll().loginProcessingUrl("/doLogin")
+	    	.formLogin().loginPage("/login").permitAll().loginProcessingUrl("/doLogin")
 	    	.and()
 	    	.logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/")
+	    	.and()
+	    	.rememberMe()
 	    	.and()
 	    	.csrf().disable()
 	    	;
@@ -47,15 +54,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	return userDetailsService;
     }
 
-    @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
-	this.userDetailsService = userDetailsService;
-    }
+//    @Autowired
+//    public void setUserDetailsService(UserDetailsService userDetailsService) {
+//	this.userDetailsService = userDetailsService;
+//    }
     
     @Bean
     public PasswordEncoder passwordEncoder() {
-	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-	return bCryptPasswordEncoder;
+	return new BCryptPasswordEncoder();
     }
 
 }

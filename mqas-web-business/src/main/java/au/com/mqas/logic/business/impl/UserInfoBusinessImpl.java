@@ -8,13 +8,19 @@ import org.springframework.stereotype.Component;
 
 import au.com.mqas.adapter.service.TokenService;
 import au.com.mqas.adapter.service.UserInfoService;
+import au.com.mqas.db.data.model.ResetPasswordToken;
 import au.com.mqas.db.data.model.UserInfo;
 import au.com.mqas.db.data.model.VerificationToken;
 import au.com.mqas.logic.business.UserInfoBusiness;
+import au.com.mqas.logic.business.mapper.ForgotPassMapper;
 import au.com.mqas.logic.business.mapper.LoginUserMapper;
+import au.com.mqas.logic.business.mapper.ResetPasswordMapper;
 import au.com.mqas.logic.business.mapper.UserMapper;
 import au.com.mqas.logic.event.RegistrationEvent;
+import au.com.mqas.logic.event.ResetPassEvent;
+import au.com.mqas.transfer.data.dto.ForgotPassDto;
 import au.com.mqas.transfer.data.dto.LoginUserDto;
+import au.com.mqas.transfer.data.dto.ResetPasswordDto;
 import au.com.mqas.transfer.data.dto.UserDto;
 
 @Component
@@ -24,9 +30,15 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
 
     private TokenService<VerificationToken> verificationTokenService;
 
+    private TokenService<ResetPasswordToken> resetPasswordTokenService;
+
     private UserMapper userMapper;
 
     private LoginUserMapper loginUserMapper;
+
+    private ForgotPassMapper forgotPassMapper;
+
+    private ResetPasswordMapper resetPasswordMapper;
 
     private ApplicationEventPublisher eventPublisher;
 
@@ -95,7 +107,55 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
     @Override
     public UserDto verifyRegistrationToken(String token) {
 	VerificationToken verificationToken = verificationTokenService.verifyToken(token);
+
+	verificationTokenService.deleteToken(verificationToken);
+
 	return userMapper.userInfoToUserDto(verificationToken.getUserInfo());
+    }
+
+    @Override
+    public ResetPasswordDto verifyResetPasswordToken(String token) {
+	ResetPasswordToken resetPasswordToken = resetPasswordTokenService.verifyToken(token);
+
+//	resetPasswordTokenService.deleteToken(resetPasswordToken);
+
+	ResetPasswordDto resetPasswordDto = resetPasswordMapper
+		.userInfoToResetPasswordDto(resetPasswordToken.getUserInfo());
+	resetPasswordDto.setPassword("");
+	resetPasswordDto.setSecurityAnswer("");
+
+	return resetPasswordDto;
+    }
+
+    @Override
+    public void validateUserInfoForResetPassword(ForgotPassDto forgotPassDto) {
+
+	UserInfo currentUserInfo = userInfoService.validateEmailAndBirthDay(forgotPassDto.getEmail(),
+		forgotPassDto.getDateOfBirth());
+
+	ResetPasswordToken resetPasswordToken = resetPasswordTokenService.createToken(currentUserInfo);
+
+	ResetPassEvent event = new ResetPassEvent(resetPasswordToken);
+
+	eventPublisher.publishEvent(event);
+
+    }
+
+    @Override
+    public void resetPasswordForUser(ResetPasswordDto resetPassDto) {
+	UserInfo userInfo = userInfoService.validateUserBySecurityAnswer(resetPassDto.getId(), resetPassDto.getEmail(),
+		resetPassDto.getSecurityAnswer());
+	
+	userInfo.setPassword(resetPassDto.getPassword());
+	
+	userInfoService.saveUser(userInfo);
+	
+    }
+
+    @Override
+    public UserDto updatePassword(ForgotPassDto forgotPassDto) {
+	// TODO Auto-generated method stub
+	return null;
     }
 
     public UserInfoService getUserInfoService() {
@@ -141,6 +201,33 @@ public class UserInfoBusinessImpl implements UserInfoBusiness {
     @Autowired
     public void setEventPublisher(ApplicationEventPublisher eventPublisher) {
 	this.eventPublisher = eventPublisher;
+    }
+
+    public ForgotPassMapper getForgotPassMapper() {
+	return forgotPassMapper;
+    }
+
+    @Autowired
+    public void setForgotPassMapper(ForgotPassMapper forgotPassMapper) {
+	this.forgotPassMapper = forgotPassMapper;
+    }
+
+    public TokenService<ResetPasswordToken> getResetPasswordTokenService() {
+	return resetPasswordTokenService;
+    }
+
+    @Autowired
+    public void setResetPasswordTokenService(TokenService<ResetPasswordToken> resetPasswordTokenService) {
+	this.resetPasswordTokenService = resetPasswordTokenService;
+    }
+
+    public ResetPasswordMapper getResetPasswordMapper() {
+	return resetPasswordMapper;
+    }
+
+    @Autowired
+    public void setResetPasswordMapper(ResetPasswordMapper resetPasswordMapper) {
+	this.resetPasswordMapper = resetPasswordMapper;
     }
 
 }

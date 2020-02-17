@@ -1,6 +1,7 @@
 package au.com.mqas.adapter.service.impl;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,13 @@ public class VerificationTokenService implements TokenService<VerificationToken>
     @Override
     public VerificationToken verifyToken(String token) {
 	Optional<VerificationToken> vtOpt = verificationTokenRepo.findByToken(token);
-	return vtOpt.filter(vt -> vt.getExpiry().isAfter(LocalTime.now()))/* .map(VerificationToken::getUserInfo) */
+	return vtOpt.filter(vt -> vt.getExpiry().isAfter(LocalTime.now(ZoneId.of("UTC"))))/* .map(VerificationToken::getUserInfo) */
 		.orElseThrow(() -> new TokenException("The token is not found"));
-
+    }
+    
+    @Override
+    public void deleteToken(VerificationToken token) {
+	verificationTokenRepo.delete(token);
     }
 
     public VerificationTokenRepo getVerificationTokenRepo() {

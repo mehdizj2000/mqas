@@ -1,6 +1,7 @@
 package au.com.mqas.db.data.model;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class VerificationToken extends AbstractItem implements Token {
     @PrePersist
     public void prePersist() {
 	token = UUID.randomUUID().toString();
-	expiry = LocalTime.now().plus(35, ChronoUnit.MINUTES);
+	expiry = LocalTime.now(ZoneId.of("UTC")).plus(35, ChronoUnit.MINUTES);
     }
 
 }

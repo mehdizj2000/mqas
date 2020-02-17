@@ -16,12 +16,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 //@SpringBootTest
 @ContextConfiguration(classes = TestConf.class)
-class MqasAppListenerTest {
+class UserRegistrationListenerTest {
 
-    @Autowired
+//    @Autowired
     private JavaMailSender javaMailSender;
 
-    @Test
+//    @Test
     void test() {
 	final String recipientAddress = "zareimeh@gmail.com";
 	final String subject = "Registration Confirmation";

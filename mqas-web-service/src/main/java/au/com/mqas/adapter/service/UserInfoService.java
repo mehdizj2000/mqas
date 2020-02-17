@@ -1,5 +1,6 @@
 package au.com.mqas.adapter.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,11 @@ public interface UserInfoService {
     UserInfo saveUser(UserInfo existingUser);
 
     UserInfo enableUser(UserInfo userInfo);
-
+    
     Optional<UserInfo> findByEmail(String email);
+
+    UserInfo validateEmailAndBirthDay(String email, LocalDate birthDate);
+    
+    UserInfo validateUserBySecurityAnswer(Long id, String email, String secAnswer);
 
 }

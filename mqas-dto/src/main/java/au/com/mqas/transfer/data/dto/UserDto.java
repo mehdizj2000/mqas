@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
@@ -39,10 +39,17 @@ public class UserDto extends AbstractDto {
     @Past
     private LocalDate dateOfBirth;
 
-    @JsonIgnore
+//    @NotEmpty(message = "Password is empty")
     private String password;
 
-    @Getter(onMethod_ = @JsonProperty(value = "shipping_address"))
+    @NotEmpty(message = "security question is empty")
+    @Size(min = 5, max = 25, message = "question is long or short")
+    private String securityQuestion;
+
+    @NotEmpty(message = "security answer is empty")
+    @Size(min = 2, max = 10, message = "answer is long")
+    private String securityAnswer;
+
     private AddressDto shippingAddress;
 
 }
