@@ -10,10 +10,10 @@ import au.com.mqas.transfer.data.dto.UserDto;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    UserDto userInfoToUserDto(UserInfo userInfo);
+	UserDto userInfoToUserDto(UserInfo userInfo);
 
-    List<UserDto> userInfosToUserDtos(List<UserInfo> userInfo);
+	List<UserDto> userInfosToUserDtos(List<UserInfo> userInfo);
 
-    UserInfo userDtoToUserInfo(UserDto userDto);
+	UserInfo userDtoToUserInfo(UserDto userDto);
 
 }

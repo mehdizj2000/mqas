@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,38 +16,38 @@ import au.com.mqas.db.data.model.UserInfo;
 
 @SpringBootTest
 @ContextConfiguration(classes = { MqasAdapterApplicationConfig.class, MqasDataApplicationConfig.class,
-	JpaConfig.class })
+		JpaConfig.class })
 class MqasAdapterApplicationConfigTest {
 
-    @Autowired
-    private UserInfoService userInfoService;
+	@Autowired
+	private UserInfoService userInfoService;
 
-    @Test
-    void testInsert() {
+//    @Test
+	void testInsert() {
 
-	UserInfo userInfo = new UserInfo();
-	userInfo.setEmail("kazem@yahoo.com");
-	userInfo.setFirstName("kazem");
-	userInfo.setLastName("pool-lazem");
-	userInfo.setPassword("123456");
-	userInfo.setDateOfBirth(LocalDate.of(1979, 9, 21));
-	userInfo.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
-	userInfo.setSecurityAnswer("jhdfsjh");
+		UserInfo userInfo = new UserInfo();
+		userInfo.setEmail("kazem@yahoo.com");
+		userInfo.setFirstName("kazem");
+		userInfo.setLastName("pool-lazem");
+		userInfo.setPassword("123456");
+		userInfo.setDateOfBirth(LocalDate.of(1979, 9, 21));
+		userInfo.setSecurityQuestion("nsdghdgfhdgfhdgfhgdfhgdfhg");
+		userInfo.setSecurityAnswer("jhdfsjh");
 
-	Address address = new Address();
-	address.setAddressLine1("line1");
-	address.setAddressLine2("line2");
-	address.setCountry("Uganda");
-	address.setPostCode("4545456765");
-	address.setState("Goumba Goumba");
-	address.setTown("Ghombol");
+		Address address = new Address();
+		address.setAddressLine1("line1");
+		address.setAddressLine2("line2");
+		address.setCountry("Uganda");
+		address.setPostCode("4545456765");
+		address.setState("Goumba Goumba");
+		address.setTown("Ghombol");
 
-	userInfo.setShippingAddress(address);
+		userInfo.setShippingAddress(address);
 
-	UserInfo savedUser = userInfoService.saveUser(userInfo);
+		UserInfo savedUser = userInfoService.saveUser(userInfo);
 
-	assertNotNull(savedUser);
+		assertNotNull(savedUser);
 
-    }
+	}
 
 }

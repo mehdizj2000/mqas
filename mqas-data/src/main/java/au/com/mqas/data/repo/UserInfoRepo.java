@@ -9,10 +9,10 @@ import au.com.mqas.db.data.model.UserInfo;
 
 public interface UserInfoRepo extends JpaRepository<UserInfo, Long> {
 
-    Optional<UserInfo> findByEmail(String email);
-    
-    Optional<UserInfo> findByEmailAndDateOfBirth(String email, LocalDate dateOfBirth);
-    
-    Optional<UserInfo> findByIdAndEmailAndSecurityAnswer(Long id, String email, String secAnswer);
+	Optional<UserInfo> findByEmail(String email);
+
+	Optional<UserInfo> findByEmailAndDateOfBirth(String email, LocalDate dateOfBirth);
+
+	Optional<UserInfo> findByIdAndEmailAndSecurityAnswer(Long id, String email, String secAnswer);
 
 }

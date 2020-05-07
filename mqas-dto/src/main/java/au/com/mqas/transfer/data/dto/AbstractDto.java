@@ -10,12 +10,12 @@ import lombok.Getter;
 @Data
 public abstract class AbstractDto {
 
-    private Long id;
+	private Long id;
 
-    @Getter(onMethod_ = @JsonProperty(value = "creation_time"))
-    private ZonedDateTime creationTime;
+	@Getter(onMethod_ = @JsonProperty(value = "creation_time"))
+	private ZonedDateTime creationTime;
 
-    @Getter(onMethod_ = @JsonProperty(value = "modified_time"))
-    private ZonedDateTime modifiedTime;
+	@Getter(onMethod_ = @JsonProperty(value = "modified_time"))
+	private ZonedDateTime modifiedTime;
 
 }

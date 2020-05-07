@@ -1,0 +1,12 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    password: 5963$Kjohn&
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+    protocol: smtp
+    username: mehdi.z.jorshari@gmail.com

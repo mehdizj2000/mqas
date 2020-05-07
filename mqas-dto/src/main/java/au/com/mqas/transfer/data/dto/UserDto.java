@@ -23,33 +23,33 @@ import lombok.ToString;
 @JsonRootName(value = "user")
 public class UserDto extends AbstractDto {
 
-    @Getter(onMethod_ = { @JsonProperty(value = "first_name") })
-    @NotEmpty
-    private String firstName;
+	@Getter(onMethod_ = { @JsonProperty(value = "first_name") })
+	@NotEmpty
+	private String firstName;
 
-    @Getter(onMethod_ = @JsonProperty(value = "last_name"))
-    @NotEmpty
-    private String lastName;
+	@Getter(onMethod_ = @JsonProperty(value = "last_name"))
+	@NotEmpty
+	private String lastName;
 
-    @NotEmpty
-    private String email;
+	@NotEmpty
+	private String email;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
-    @Past
-    private LocalDate dateOfBirth;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
+	@Past
+	private LocalDate dateOfBirth;
 
 //    @NotEmpty(message = "Password is empty")
-    private String password;
+	private String password;
 
-    @NotEmpty(message = "security question is empty")
-    @Size(min = 5, max = 25, message = "question is long or short")
-    private String securityQuestion;
+	@NotEmpty(message = "security question is empty")
+	@Size(min = 5, max = 25, message = "question is long or short")
+	private String securityQuestion;
 
-    @NotEmpty(message = "security answer is empty")
-    @Size(min = 2, max = 10, message = "answer is long")
-    private String securityAnswer;
+	@NotEmpty(message = "security answer is empty")
+	@Size(min = 2, max = 10, message = "answer is long")
+	private String securityAnswer;
 
-    private AddressDto shippingAddress;
+	private AddressDto shippingAddress;
 
 }

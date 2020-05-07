@@ -20,21 +20,21 @@ import au.com.mqas.data.repo.VerificationTokenRepo;
 //@SpringBootTest
 class VerificationTokenServiceTest {
 
-    @Mock
-    private VerificationTokenRepo verificationTokenRepo;
+	@Mock
+	private VerificationTokenRepo verificationTokenRepo;
 
-    @InjectMocks
-    private VerificationTokenService verificationTokenService;
+	@InjectMocks
+	private VerificationTokenService verificationTokenService;
 
-    @Test
-    void test() {
+	@Test
+	void test() {
 
-	when(verificationTokenRepo.findByToken(ArgumentMatchers.any(String.class))).thenReturn(Optional.empty());
+		when(verificationTokenRepo.findByToken(ArgumentMatchers.any(String.class))).thenReturn(Optional.empty());
 
-	assertThrows(TokenException.class, () -> verificationTokenService.verifyToken("hggsdfhgshdgfhsd"));
+		assertThrows(TokenException.class, () -> verificationTokenService.verifyToken("hggsdfhgshdgfhsd"));
 
-	verify(verificationTokenRepo).findByToken(ArgumentMatchers.any(String.class));
+		verify(verificationTokenRepo).findByToken(ArgumentMatchers.any(String.class));
 
-    }
+	}
 
 }

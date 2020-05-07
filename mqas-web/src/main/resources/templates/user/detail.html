@@ -7,54 +7,116 @@
 <body>
 	<h1 layout:fragment="header">User Detail</h1>
 	<div layout:fragment="content" class="container">
-		<div class="pull-right">
-			<a class="btn btn-info" th:href="@{'/user/modify/' + ${user.id}}">Update User</a>
+
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">Some Message</div>
+			</div>
 		</div>
-		<div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">Some Message</div>
-		<div class="row">
-			<dl class="dl-horizontal">
 
-				<dt>ID</dt>
-				<dd id="user.id" th:text="${user.id}">123456</dd>
+		<div class="col-lg-8">
+			<div class="row">
+				<div class="col-lg-4">
+					<label>ID</label>
+				</div>
+				<div class="col-lg-4" id="user.id" th:text="${user.id}">123456</div>
+			</div>
 
-				<dt>First Name</dt>
-				<dd id="user.firstName" th:text="${user.firstName}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>First Name</label>
+				</div>
+				<div class="col-lg-4" id="user.firstName" th:text="${user.firstName}">123456</div>
+			</div>
 
-				<dt>Last Name</dt>
-				<dd id="user.lastName" th:text="${user.lastName}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Last Name</label>
+				</div>
+				<div class="col-lg-4" id="user.lastName" th:text="${user.lastName}">123456</div>
+			</div>
 
-				<dt>EMail</dt>
-				<dd id="user.email" th:text="${user.email}">123456</dd>
-				
-				<dt>Birth Date</dt>
-				<dd id="user.dateOfBirth" th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Email</label>
+				</div>
+				<div class="col-lg-4" id="user.email" th:text="${user.email}">123456</div>
+			</div>
 
-				<dt>Creation Time</dt>
-				<dd id="user.creationTime" th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label for="user.dateOfBirth">Birth Date</label>
+				</div>
+				<div class="col-lg-4" id="user.dateOfBirth" th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">123456</div>
+			</div>
 
-				<dt>Modified Time</dt>
-				<dd id="user.modifiedTim" th:text="${#temporals.format(user.modifiedTime, 'dd-MM-yyyy hh:mm a')}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Creation Time</label>
+				</div>
+				<div class="col-lg-4" id="user.creationTime" th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">123456</div>
+			</div>
 
-				<dt>Line01</dt>
-				<dd id="id" th:text="${user.shippingAddress.addressLine1}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Modified Time</label>
+				</div>
+				<div class="col-lg-4" id="user.modifiedTime" th:text="${#temporals.format(user.modifiedTime, 'dd-MM-yyyy hh:mm a')}">123456</div>
+			</div>
 
-				<dt>Line02</dt>
-				<dd id="id" th:text="${user.shippingAddress.addressLine2}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Line01</label>
+				</div>
+				<div class="col-lg-4" id="user.shippingAddress.addressLine1" th:text="${user.shippingAddress != null ? user.shippingAddress.addressLine1:''}"></div>
+			</div>
 
-				<dt>PostCode</dt>
-				<dd id="id" th:text="${user.shippingAddress.postCode}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Line02</label>
+				</div>
 
-				<dt>Town/City</dt>
-				<dd id="id" th:text="${user.shippingAddress.town}">123456</dd>
+				<div class="col-lg-4" id="user.shippingAddress.addressLine2" th:text="${user.shippingAddress != null ? user.shippingAddress.addressLine2:''}"></div>
+			</div>
 
-				<dt>State</dt>
-				<dd id="id" th:text="${user.shippingAddress.state}">123456</dd>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>PostCode</label>
+				</div>
+				<div class="col-lg-4" id="user.shippingAddress.postCode" th:text="${user.shippingAddress != null ? user.shippingAddress.postCode:''}"></div>
+			</div>
 
-				<dt>Country</dt>
-				<dd id="id" th:text="${user.shippingAddress.country}">123456</dd>
-			</dl>
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Town/City</label>
+				</div>
+				<div class="col-lg-4" id="user.shippingAddress.town" th:text="${user.shippingAddress != null ? user.shippingAddress.town:''}"></div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-lg-4">
+					<label>State</label>
+				</div>
+				<div class="col-lg-4" id="user.shippingAddress.state" th:text="${user.shippingAddress != null ? user.shippingAddress.state:''}"></div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4">
+					<label>Country</label>
+				</div>
+				<div class="col-lg-4" id="user.shippingAddress.country" th:text="${user.shippingAddress != null ? user.shippingAddress.country:''}"></div>
+			</div>
+
+			<div class="col-lg-offset-4 col-lg-2">
+				<div class="row pull-right">
+					<a class="btn btn-info" th:href="@{'/user/modify/' + ${user.id}}">Update User</a>
+				</div>
+			</div>
 		</div>
+
+
+
 	</div>
-
 </body>
 </html>

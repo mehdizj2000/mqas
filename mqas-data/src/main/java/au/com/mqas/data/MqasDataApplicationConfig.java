@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MqasDataApplicationConfig {
 
-    public static void main(String[] args) {
-	SpringApplication.run(MqasDataApplicationConfig.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(MqasDataApplicationConfig.class, args);
+	}
 
 }

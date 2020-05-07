@@ -7,11 +7,10 @@ import lombok.Data;
 @Data
 public class PasswordDto {
 
+	@NotEmpty(message = "Password is empty")
+	private String password;
 
-    @NotEmpty(message = "Password is empty")
-    private String password;
-
-    @NotEmpty(message = "password confirmation is empty")
-    private String passwordConfirmation;
+	@NotEmpty(message = "password confirmation is empty")
+	private String passwordConfirmation;
 
 }

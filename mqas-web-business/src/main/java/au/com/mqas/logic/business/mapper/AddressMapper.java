@@ -10,9 +10,9 @@ import au.com.mqas.transfer.data.dto.AddressDto;
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
 
-    AddressDto addressToAddressDto(Address address);
+	AddressDto addressToAddressDto(Address address);
 
-    Address adddressDtoToAddress(Address address);
+	Address adddressDtoToAddress(Address address);
 
-    List<AddressDto> addressesToAddressDtos(List<Address> address);
+	List<AddressDto> addressesToAddressDtos(List<Address> address);
 }

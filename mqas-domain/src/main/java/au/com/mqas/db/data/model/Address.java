@@ -13,20 +13,20 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Address extends AbstractItem {
 
-    private String addressLine1;
+	private String addressLine1;
 
-    private String addressLine2;
+	private String addressLine2;
 
-    private String town;
+	private String town;
 
-    private String postCode;
+	private String postCode;
 
-    private String state;
+	private String state;
 
-    private String country;
+	private String country;
 
-    @OneToOne(mappedBy = "shippingAddress")
+	@OneToOne(mappedBy = "shippingAddress")
 //	@JoinColumn(name = "fk_user_id")
-    private UserInfo userInfo;
+	private UserInfo userInfo;
 
 }

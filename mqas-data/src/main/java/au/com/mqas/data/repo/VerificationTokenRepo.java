@@ -8,6 +8,6 @@ import au.com.mqas.db.data.model.VerificationToken;
 
 public interface VerificationTokenRepo extends JpaRepository<VerificationToken, Long> {
 
-    Optional<VerificationToken> findByToken(String token);
+	Optional<VerificationToken> findByToken(String token);
 
 }

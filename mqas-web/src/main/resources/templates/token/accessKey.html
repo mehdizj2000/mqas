@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Users: view all</title>
+</head>
+<body>
+	<h1 layout:fragment="header">Products</h1>
+	<div layout:fragment="content" class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 th:text="'MQAS Service: ' + ${accessLevel.name}">Spring Framework Guru - Course Name</h1>
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="col-md-6">
+				<div class="course-listing">
+					<div class="row">
+
+						<div class="col-xl-12">
+							<div class="course-box-image-container">
+								<img role="presentation" src="/images/SpringIntroThumb.png" class="course-box-image">
+							</div>
+							<!-- <div class="course-listing-title" th:text="${product.courseName}">Spring Core Dev Ops</div>
+						<div class="course-listing-subtitle" th:text="${product.courseSubtitle}">Managing and Deploying Spring Applications in the Enterprise</div> -->
+						</div>
+
+					</div>
+					<div class="row course-listing-extra-info col-xs-12">
+						<div class="col-xs-8">
+							<img align="left" alt="John Thompson" src="/images/instructor_jt.jpg" class="img-circle">
+							<div class="small course-author-name" th:text="#{developer.name}">John Thompson</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="small course-price" th:text="${accessLevel.price>0 ? '$' + accessLevel.price : 'FREE' }">FREE</div>
+						</div>
+					</div>
+
+					<div class="row col-xs-12">
+						<!-- <ol class="breadcrumb col-xs-10">
+							<li th:each="productCategory : ${product.productCategories}"><a href="#" th:text="${productCategory.category}">Cat 1</a></li>
+							<li th:remove="all"><a href="#">Cat 2</a></li>
+							<li th:remove="all"><a href="#">Cat 3</a></li>
+						</ol> -->
+						<div class="col-xs-2">
+							<a class="btn btn-success" th:href="@{'/token/product/buy/' + ${accessLevel.id}}" th:text="#{product.page.buynow}">Buy now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<h2 th:text="${accessLevel.name}">Course Title</h2>
+					<p th:text="${accessLevel.description}">In malesuada hendrerit a sagittis lacinia aliquet tincidunt faucibus molestie ut vestibulum et eleifend vestibulum quam
+						scelerisque dignissim. Mi aliquet arcu adipiscing nec condimentum torquent parturient leo a aenean a natoque laoreet metus adipiscing primis libero fermentum etiam
+						condimentum a condimentum. Duis eget vestibulum a a a faucibus interdum egestas a a at ut venenatis adipiscing eget cursus parturient vestibulum laoreet erat enim.
+						Mus ut adipiscing suspendisse sed enim cubilia porta neque tempus parturient habitant a malesuada ad vivamus per faucibus eu vitae a litora integer netus scelerisque.
+						Lacus metus a ac non lacinia mattis a mattis nisl a euismod amet vivamus pulvinar ullamcorper nostra elementum curabitur lobortis nostra vivamus.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

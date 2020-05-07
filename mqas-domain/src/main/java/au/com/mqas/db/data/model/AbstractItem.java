@@ -17,25 +17,25 @@ import lombok.Data;
 @Data
 public abstract class AbstractItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(updatable = false, nullable = false)
-    private ZonedDateTime creationTime;
+	@Column(updatable = false, nullable = false)
+	private ZonedDateTime creationTime;
 
-    private ZonedDateTime modifiedTime;
+	private ZonedDateTime modifiedTime;
 
-    @PrePersist
-    public void preInsert() {
-	if (creationTime == null)
-	    creationTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-    }
+	@PrePersist
+	public void preInsert() {
+		if (creationTime == null)
+			creationTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
+	}
 
-    @PreUpdate
-    public void preUpdate() {
-	if (modifiedTime == null)
-	    modifiedTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-    }
+	@PreUpdate
+	public void preUpdate() {
+		if (modifiedTime == null)
+			modifiedTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
+	}
 
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Users: view all</title>
+</head>
+<body>
+	<h1 layout:fragment="header">API Keys: View All</h1>
+	<div layout:fragment="content" class="container">
+		<div class="pull-right">
+			<a class="btn btn-info" th:href="@{/token/createRequest}">Create API Key Request</a>
+		</div>
+		<!-- <div th:text="${users}">empty</div> -->
+		<table class="table table-borders table-striped">
+			<thead>
+				<tr>
+					<td>key</td>
+					<td>expiry date</td>
+					<td>level</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${apiKeys.empty}">
+					<td colspan="3">No API Keys</td>
+				</tr>
+				<tr th:each="apiKey : ${apiKeys}">
+					<td th:text="${apiKey.key}"></td>
+					<td th:text="${#temporals.format(apiKey.expiryDate, 'dd-MM-yyyy')}">Jan 12, 2020 10:10:10 PM AEDT</td>
+					<td th:text="${apiKey.accessLevel.name}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

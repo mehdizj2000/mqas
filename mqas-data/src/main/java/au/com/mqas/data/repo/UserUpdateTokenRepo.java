@@ -8,6 +8,6 @@ import au.com.mqas.db.data.model.UserUpdateToken;
 
 public interface UserUpdateTokenRepo extends JpaRepository<UserUpdateToken, Long> {
 
-    Optional<UserUpdateToken> findByToken(String token);
+	Optional<UserUpdateToken> findByToken(String token);
 
 }

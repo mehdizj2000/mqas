@@ -22,83 +22,83 @@ import au.com.mqas.transfer.data.dto.LoginUserDto;
 @RequestMapping("/")
 public class HomeController {
 
-    private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
-    private UserInfoBusiness userInfoBusiness;
+	private UserInfoBusiness userInfoBusiness;
 
-    @GetMapping({ "", "index", "home" })
-    public String home(Model model) {
-	return "index";
-    }
-
-    @GetMapping("/login")
-    public String loginPage() {
-	return "loginPage";
-    }
-
-    @GetMapping("/register")
-    public String registrationPage(@ModelAttribute("loginUser") LoginUserDto loginUser) {
-	return "signup";
-    }
-
-    @PostMapping("/register")
-    public String registerNewUser(@ModelAttribute("loginUser") @Valid LoginUserDto loginUser, BindingResult result,
-	    RedirectAttributes redirect) {
-
-	if (result.hasErrors()) {
-	    return "signup";
+	@GetMapping({ "", "index", "home" })
+	public String home(Model model) {
+		return "index";
 	}
 
-	loginUser.setPassword(passwordEncoder.encode(loginUser.getPassword()));
-
-	/* UserDto userDto = */userInfoBusiness.registerUser(loginUser);
-
-	redirect.addFlashAttribute("globalMessage",
-		"User Registered. An email will be send to your email account. Please check the instruction for furture shits");
-	return "redirect:/register";
-    }
-
-    @GetMapping("/forgotPassword")
-    public String resetPassword(@ModelAttribute("forgotPass") ForgotPassDto forgotPass) {
-	return "resetPasswordInfo";
-    }
-
-    @PostMapping("/forgotPassword")
-    public ModelAndView prepareResetPassword(@ModelAttribute("forgotPass") @Valid ForgotPassDto forgotPass,
-	    BindingResult result, RedirectAttributes redirect) {
-
-	if (result.hasErrors()) {
-	    return new ModelAndView("resetPasswordInfo", "formErrors", result.getFieldErrors());
+	@GetMapping("/login")
+	public String loginPage() {
+		return "loginPage";
 	}
 
-	try {
-	    userInfoBusiness.validateUserInfoForResetPassword(forgotPass);
-	} catch(Exception e) {
-	    return new ModelAndView("resetPasswordInfo", "error", "email or birthday are not found. Please try again");
+	@GetMapping("/register")
+	public String registrationPage(@ModelAttribute("loginUser") LoginUserDto loginUser) {
+		return "signup";
 	}
 
-	redirect.addFlashAttribute("globalMessage",
-		"Reset Password token will be sent to your email address. Please follow the instruction for furthure shits");
+	@PostMapping("/register")
+	public String registerNewUser(@ModelAttribute("loginUser") @Valid LoginUserDto loginUser, BindingResult result,
+			RedirectAttributes redirect) {
 
-	return new ModelAndView("redirect:/resetPasswordInfo");
-    }
+		if (result.hasErrors()) {
+			return "signup";
+		}
 
-    public UserInfoBusiness getUserInfoBusiness() {
-	return userInfoBusiness;
-    }
+		loginUser.setPassword(passwordEncoder.encode(loginUser.getPassword()));
 
-    @Autowired
-    public void setUserInfoBusiness(UserInfoBusiness userInfoBusiness) {
-	this.userInfoBusiness = userInfoBusiness;
-    }
+		/* UserDto userDto = */userInfoBusiness.registerUser(loginUser);
 
-    public PasswordEncoder getPasswordEncoder() {
-	return passwordEncoder;
-    }
+		redirect.addFlashAttribute("globalMessage",
+				"User Registered. An email will be send to your email account. Please check the instruction for furture shits");
+		return "redirect:/register";
+	}
 
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-	this.passwordEncoder = passwordEncoder;
-    }
+	@GetMapping("/forgotPassword")
+	public String resetPassword(@ModelAttribute("forgotPass") ForgotPassDto forgotPass) {
+		return "resetPasswordInfo";
+	}
+
+	@PostMapping("/forgotPassword")
+	public ModelAndView prepareResetPassword(@ModelAttribute("forgotPass") @Valid ForgotPassDto forgotPass,
+			BindingResult result, RedirectAttributes redirect) {
+
+		if (result.hasErrors()) {
+			return new ModelAndView("resetPasswordInfo", "formErrors", result.getFieldErrors());
+		}
+
+		try {
+			userInfoBusiness.validateUserInfoForResetPassword(forgotPass);
+		} catch (Exception e) {
+			return new ModelAndView("resetPasswordInfo", "error", "email or birthday are not found. Please try again");
+		}
+
+		redirect.addFlashAttribute("globalMessage",
+				"Reset Password token will be sent to your email address. Please follow the instruction for furthure shits");
+
+		return new ModelAndView("redirect:/resetPasswordInfo");
+	}
+
+	public UserInfoBusiness getUserInfoBusiness() {
+		return userInfoBusiness;
+	}
+
+	@Autowired
+	public void setUserInfoBusiness(UserInfoBusiness userInfoBusiness) {
+		this.userInfoBusiness = userInfoBusiness;
+	}
+
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
+
+	@Autowired
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
 
 }

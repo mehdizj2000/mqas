@@ -15,18 +15,18 @@ import lombok.ToString;
 @PasswordMatcher
 public class ResetPasswordDto extends PasswordDto {
 
-    private Long id;
+	private Long id;
 
-    @Email
-    @NotEmpty(message = "Email is empty")
-    private String email;
+	@Email
+	@NotEmpty(message = "Email is empty")
+	private String email;
 
-    @NotEmpty(message = "security question is empty")
-    @Size(min = 5, max = 25, message = "question is long or short")
-    private String securityQuestion;
+	@NotEmpty(message = "security question is empty")
+	@Size(min = 5, max = 25, message = "question is long or short")
+	private String securityQuestion;
 
-    @NotEmpty(message = "security answer is empty")
-    @Size(min = 2, max = 10, message = "answer is long")
-    private String securityAnswer;
+	@NotEmpty(message = "security answer is empty")
+	@Size(min = 2, max = 10, message = "answer is long")
+	private String securityAnswer;
 
 }

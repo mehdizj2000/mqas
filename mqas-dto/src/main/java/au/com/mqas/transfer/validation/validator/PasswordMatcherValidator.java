@@ -10,21 +10,21 @@ import au.com.mqas.transfer.validation.PasswordMatcher;
 
 public class PasswordMatcherValidator implements ConstraintValidator<PasswordMatcher, PasswordDto> {
 
-    @Override
-    public void initialize(PasswordMatcher constraintAnnotation) {
-	// TODO Auto-generated method stub
+	@Override
+	public void initialize(PasswordMatcher constraintAnnotation) {
+		// TODO Auto-generated method stub
 //	ConstraintValidator.super.initialize(constraintAnnotation);
-    }
+	}
 
-    @Override
-    public boolean isValid(PasswordDto value, ConstraintValidatorContext context) {
-	boolean isValid = StringUtils.equals(value.getPassword(), value.getPasswordConfirmation());
+	@Override
+	public boolean isValid(PasswordDto value, ConstraintValidatorContext context) {
+		boolean isValid = StringUtils.equals(value.getPassword(), value.getPasswordConfirmation());
 //	if (!isValid) {
 //	    context.disableDefaultConstraintViolation();
 //	    context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
 //		    .addPropertyNode("matchingPassword").addConstraintViolation();
 //	}
-	return isValid;
-    }
+		return isValid;
+	}
 
 }

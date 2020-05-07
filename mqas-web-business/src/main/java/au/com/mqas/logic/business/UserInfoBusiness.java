@@ -9,26 +9,28 @@ import au.com.mqas.transfer.data.dto.UserDto;
 
 public interface UserInfoBusiness {
 
-    List<UserDto> listAllUsers();
+	List<UserDto> listAllUsers();
 
-    void deleteUser(Long uid);
+	void deleteUser(Long uid);
 
-    UserDto findUserById(Long uid);
+	UserDto findUserById(Long uid);
 
-    UserDto saveUser(UserDto user);
+	UserDto findUserByEmail(String email);
 
-    UserDto registerUser(LoginUserDto user);
+	UserDto saveUser(UserDto user);
 
-    UserDto verifyRegistrationToken(String token);
+	UserDto registerUser(LoginUserDto user);
 
-    ResetPasswordDto verifyResetPasswordToken(String token);
+	UserDto verifyRegistrationToken(String token);
 
-    UserDto enableUser(UserDto user);
+	ResetPasswordDto verifyResetPasswordToken(String token);
 
-    UserDto updatePassword(ForgotPassDto forgotPassDto);
+	UserDto enableUser(UserDto user);
 
-    void validateUserInfoForResetPassword(ForgotPassDto forgotPass);
+	UserDto updatePassword(ForgotPassDto forgotPassDto);
 
-    void resetPasswordForUser(ResetPasswordDto forgotPassDto);
+	void validateUserInfoForResetPassword(ForgotPassDto forgotPass);
+
+	void resetPasswordForUser(ResetPasswordDto forgotPassDto);
 
 }

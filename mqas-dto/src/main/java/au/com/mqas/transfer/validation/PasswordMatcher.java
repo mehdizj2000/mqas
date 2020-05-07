@@ -19,10 +19,10 @@ import au.com.mqas.transfer.validation.validator.PasswordMatcherValidator;
 @Constraint(validatedBy = PasswordMatcherValidator.class)
 public @interface PasswordMatcher {
 
-    String message() default "Passwords do not match";
+	String message() default "Passwords do not match";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

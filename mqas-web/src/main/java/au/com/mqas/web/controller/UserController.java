@@ -3,6 +3,7 @@ package au.com.mqas.web.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,139 +27,155 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/user")
 public class UserController {
 
-    private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
-    private UserInfoBusiness userInfoBusiness;
+	private UserInfoBusiness userInfoBusiness;
 
-    @GetMapping("/list")
-    public String home(Model model) {
-	model.addAttribute("users", userInfoBusiness.listAllUsers());
-	return "/user/list";
-    }
-
-    @GetMapping("/delete/{uid}")
-    public String home(@PathVariable Long uid) {
-
-	log.info("User Id: {}", uid);
-
-	userInfoBusiness.deleteUser(uid);
-
-	return "redirect:/user/list";
-    }
-
-    @GetMapping("/view/{uid}")
-    public String view(@PathVariable Long uid, Model model) {
-
-	UserDto userDto = userInfoBusiness.findUserById(uid);
-
-	model.addAttribute("user", userDto);
-
-	return "/user/detail";
-    }
-
-    @GetMapping("/modify/{uid}")
-    public String presentUpdatePage(@PathVariable Long uid, Model model) {
-
-	UserDto userDto = userInfoBusiness.findUserById(uid);
-
-	model.addAttribute("user", userDto);
-
-	return "user/form";
-    }
-
-    @PostMapping("/save")
-    public ModelAndView updateUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result,
-	    RedirectAttributes redirect) {
-
-	if (result.hasErrors()) {
-	    return new ModelAndView("user/form", "formErrors", result.getAllErrors());
+	@GetMapping("/list")
+	public String home(Model model) {
+		model.addAttribute("users", userInfoBusiness.listAllUsers());
+		return "/user/list";
 	}
 
-	UserDto userDto = userInfoBusiness.saveUser(user);
+	@GetMapping("/delete/{uid}")
+	public String home(@PathVariable Long uid) {
 
-	Long userId = user.getId() == null ? userDto.getId() : user.getId();
+		log.info("User Id: {}", uid);
 
-	redirect.addFlashAttribute("globalMessage", "All Good");
+		userInfoBusiness.deleteUser(uid);
 
-	return new ModelAndView("redirect:/user/view/{user.id}", "user.id", userId);
-    }
-
-    @GetMapping("/confirmRegistration")
-    public String confirmRegistration(@RequestParam String token, RedirectAttributes redirect) {
-
-	UserDto userDto = null;
-	try {
-	    userDto = userInfoBusiness.verifyRegistrationToken(token);
-	} catch (Exception e) {
-	    redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
-	    return "redirect:/login";
-	}
-	log.info("userDto: {}", userDto);
-
-	userInfoBusiness.enableUser(userDto);
-
-	redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
-	return "redirect:/login";
-    }
-
-    @GetMapping("/verifyPassword")
-    public ModelAndView verifyPassword(@RequestParam String token, RedirectAttributes redirect) {
-
-	ResetPasswordDto resetPasswordInfo = null;
-	try {
-	    resetPasswordInfo = userInfoBusiness.verifyResetPasswordToken(token);
-	} catch (Exception e) {
-	    redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
-	    return new ModelAndView("redirect:/login");
-	}
-	log.info("userDto: {}", resetPasswordInfo);
-
-	redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
-	return new ModelAndView("resetPassword", "resetPassInfo", resetPasswordInfo);
-    }
-
-    @GetMapping("/resetPassword")
-    public String resetPasswordForm(@ModelAttribute("resetPassInfo") ResetPasswordDto resetPassInfo) {
-	return "resetPassword";
-    }
-
-    @PostMapping("/resetPassword")
-    public ModelAndView resetPassword(@ModelAttribute("resetPassInfo") @Valid ResetPasswordDto resetPassDto,
-	    BindingResult result, RedirectAttributes redirect) {
-	if (result.hasErrors()) {
-	    return new ModelAndView("resetPassword", "formErrors", result.getAllErrors());
+		return "redirect:/user/list";
 	}
 
-	resetPassDto.setPassword(passwordEncoder.encode(resetPassDto.getPassword()));
-	
-	userInfoBusiness.resetPasswordForUser(resetPassDto);
+	@GetMapping("/view/{uid:[0-9]+}")
+	@PreAuthorize("isAuthenticated()")
+	public String view(@PathVariable Long uid, Model model) {
 
-	redirect.addFlashAttribute("message", "Password Updated successfully. All is Good!!");
+		UserDto userDto = userInfoBusiness.findUserById(uid);
 
-	return new ModelAndView("redirect:/login");
-    }
+		model.addAttribute("user", userDto);
 
-    @GetMapping("/create")
-    public String presentCreatePage(@ModelAttribute("user") UserDto user) {
-	return "/user/form";
-    }
+		return "/user/detail";
+	}
 
-    public UserInfoBusiness getUserInfoBusiness() {
-	return userInfoBusiness;
-    }
+	@GetMapping("/view/username/{username}")
+	@PreAuthorize("isAuthenticated() && #username == authentication.name")
+	public String viewByName(@PathVariable String username, Model model) {
 
-    @Autowired
-    public void setUserInfoBusiness(UserInfoBusiness userInfoBusiness) {
-	this.userInfoBusiness = userInfoBusiness;
-    }
+		UserDto userDto = userInfoBusiness.findUserByEmail(username);
 
-    public PasswordEncoder getPasswordEncoder() {
-	return passwordEncoder;
-    }
+		model.addAttribute("user", userDto);
 
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-	this.passwordEncoder = passwordEncoder;
-    }
+		return "/user/detail";
+	}
+
+	@GetMapping("/modify/{uid}")
+	public String presentUpdatePage(@PathVariable Long uid, Model model) {
+
+		UserDto userDto = userInfoBusiness.findUserById(uid);
+
+		model.addAttribute("user", userDto);
+
+		return "user/form";
+	}
+
+	@PostMapping("/save")
+	@PreAuthorize("isAuthenticated() && #user.email == authentication.name")
+	public ModelAndView updateUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result,
+			RedirectAttributes redirect) {
+
+		if (result.hasErrors()) {
+			return new ModelAndView("user/form", "formErrors", result.getAllErrors());
+		}
+
+		UserDto userDto = userInfoBusiness.saveUser(user);
+
+		Long userId = user.getId() == null ? userDto.getId() : user.getId();
+
+		redirect.addFlashAttribute("globalMessage", "All Good");
+
+		return new ModelAndView("redirect:/user/view/{user.id}", "user.id", userId);
+	}
+
+	@GetMapping("/confirmRegistration")
+	public String confirmRegistration(@RequestParam String token, RedirectAttributes redirect) {
+
+		UserDto userDto = null;
+		try {
+			userDto = userInfoBusiness.verifyRegistrationToken(token);
+		} catch (Exception e) {
+			redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
+			return "redirect:/login";
+		}
+		log.info("userDto: {}", userDto);
+
+		userInfoBusiness.enableUser(userDto);
+
+		redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
+		return "redirect:/login";
+	}
+
+	@GetMapping("/verifyPassword")
+	public ModelAndView verifyPassword(@RequestParam String token, RedirectAttributes redirect) {
+
+		ResetPasswordDto resetPasswordInfo = null;
+		try {
+			resetPasswordInfo = userInfoBusiness.verifyResetPasswordToken(token);
+		} catch (Exception e) {
+			redirect.addFlashAttribute("errorMessage", "Token is not valid, please try again");
+			return new ModelAndView("redirect:/login");
+		}
+		log.info("userDto: {}", resetPasswordInfo);
+
+		redirect.addFlashAttribute("message", "User is verified successfully, Please login and update your profile");
+		return new ModelAndView("resetPassword", "resetPassInfo", resetPasswordInfo);
+	}
+
+	@GetMapping("/resetPassword")
+	public String resetPasswordForm(@ModelAttribute("resetPassInfo") ResetPasswordDto resetPassInfo) {
+		return "resetPassword";
+	}
+
+	@PostMapping("/resetPassword")
+	public ModelAndView resetPassword(@ModelAttribute("resetPassInfo") @Valid ResetPasswordDto resetPassDto,
+			BindingResult result, RedirectAttributes redirect) {
+		if (result.hasErrors()) {
+			return new ModelAndView("resetPassword", "formErrors", result.getAllErrors());
+		}
+
+		resetPassDto.setPassword(passwordEncoder.encode(resetPassDto.getPassword()));
+		try {
+			userInfoBusiness.resetPasswordForUser(resetPassDto);
+		} catch (Exception e) {
+			return new ModelAndView("resetPassword", "errorMessage", e.getMessage());
+		}
+
+		redirect.addFlashAttribute("message", "Password Updated successfully. All is Good!!");
+
+		return new ModelAndView("redirect:/login");
+	}
+
+	@GetMapping("/create")
+	public String presentCreatePage(@ModelAttribute("user") UserDto user) {
+		return "/user/form";
+	}
+
+	public UserInfoBusiness getUserInfoBusiness() {
+		return userInfoBusiness;
+	}
+
+	@Autowired
+	public void setUserInfoBusiness(UserInfoBusiness userInfoBusiness) {
+		this.userInfoBusiness = userInfoBusiness;
+	}
+
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
+
+	@Autowired
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
 
 }

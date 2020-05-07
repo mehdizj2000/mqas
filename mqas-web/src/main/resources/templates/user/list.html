@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.com" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="layout">
+<html xmlns:th="http://www.thymeleaf.com" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="layout">
 <head>
 <meta charset="UTF-8">
 <title>Users: view all</title>
@@ -34,7 +34,7 @@
 					<td th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yyyy')}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td th:text="${#temporals.format(user.creationTime, 'dd-MM-yyyy hh:mm a')}">Jan 12, 2020 10:10:10 PM AEDT</td>
 					<td th:text="${#temporals.format(user.modifiedTime, 'dd-MM-yyyy hh:mm a')}">Jan 12, 2020 10:10:10 PM AEDT</td>
-					<td><a class="glyphicon glyphicon-trash" th:href="@{'/user/delete/' + ${user.id}}"></a>
+					<td><a class="glyphicon glyphicon-trash" sec:authorize-url="/user/delete/1" th:href="@{'/user/delete/' + ${user.id}}"></a>
 					<a class="glyphicon glyphicon-pencil" th:href="@{'/user/modify/' + ${user.id}}"></a></td>
 					<!-- <div th:text="${user}">empty</div> -->
 				</tr>

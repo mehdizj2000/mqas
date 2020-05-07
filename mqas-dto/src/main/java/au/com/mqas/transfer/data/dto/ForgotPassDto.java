@@ -14,13 +14,13 @@ import lombok.Data;
 @Data
 public class ForgotPassDto {
 
-    @Email
-    @NotEmpty(message = "Email is empty")
-    private String email;
+	@Email
+	@NotEmpty(message = "Email is empty")
+	private String email;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
-    @Past
-    private LocalDate dateOfBirth;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
+	@Past
+	private LocalDate dateOfBirth;
 
 }

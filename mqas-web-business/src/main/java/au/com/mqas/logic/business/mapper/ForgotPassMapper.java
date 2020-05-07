@@ -8,6 +8,6 @@ import au.com.mqas.transfer.data.dto.ForgotPassDto;
 @Mapper(componentModel = "spring")
 public interface ForgotPassMapper {
 
-    UserInfo forgotPassDtoToUserInfo(ForgotPassDto forgotPassDto);
-    
+	UserInfo forgotPassDtoToUserInfo(ForgotPassDto forgotPassDto);
+
 }

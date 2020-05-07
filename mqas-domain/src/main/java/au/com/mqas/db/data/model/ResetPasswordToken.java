@@ -21,19 +21,19 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class ResetPasswordToken extends AbstractItem implements Token {
 
-    @Column(updatable = false, nullable = false, unique = true)
-    private String token;
+	@Column(updatable = false, nullable = false, unique = true)
+	private String token;
 
-    @Column(updatable = false)
-    private LocalTime expiry;
+	@Column(updatable = false)
+	private LocalTime expiry;
 
-    @OneToOne
-    @JoinColumn(name = "fk_user_id")
-    private UserInfo userInfo;
+	@OneToOne
+	@JoinColumn(name = "fk_user_id")
+	private UserInfo userInfo;
 
-    @PrePersist
-    public void prePersist() {
-	token = UUID.randomUUID().toString();
-	expiry = LocalTime.now(ZoneId.of("UTC")).plus(35, ChronoUnit.MINUTES);
-    }
+	@PrePersist
+	public void prePersist() {
+		token = UUID.randomUUID().toString();
+		expiry = LocalTime.now(ZoneId.of("UTC")).plus(35, ChronoUnit.MINUTES);
+	}
 }

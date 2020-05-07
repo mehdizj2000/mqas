@@ -8,9 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "au.com.mqas.dto")
 public class MqasDtoApplicationConfig {
 
-    public static void main(String[] args) {
-	SpringApplication.run(MqasDtoApplicationConfig.class, args);
+	public static void main(String[] args) {
+		SpringApplication.run(MqasDtoApplicationConfig.class, args);
 
-    }
+	}
 
 }

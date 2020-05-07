@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.com" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.com" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 <title>layout</title>
@@ -7,28 +7,43 @@
 <script type="text/javascript" th:src="@{/webjars/jquery/1.11.1/jquery.js}" src="/webjars/jquery/1.11.1/jquery.js"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.js}" src="/webjars/bootstrap/3.3.7-1/js/bootstrap.js"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.css" />
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.css}" href="/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.css"/>
-
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.css}" href="/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.css" />
+<link th:href="@{/css/custome.css}" href="/css/custome.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="container">
 
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-expand-lg navbar-default">
 			<div class="container-fluid">
-				
+
 				<ul class="nav navbar-nav">
-					<li class="active"><a th:href="@{/}"> Home </a></li>
+					<li class="active"><a th:href="@{/}">Home</a></li>
 				</ul>
-				<ul class="nav navbar-nav">
+				<!-- <ul class="nav navbar-nav">
 					<li><a th:href="@{/user/list}">Users</a></li>
-				</ul>
+				</ul> -->
 				<ul class="nav navbar-nav navbar-right">
-					<li><a th:href="@{/logout}">Logout</a></li>
+					<li class="dropdown" sec:authorize="isAuthenticated()"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" th:text="#{say.hello} + ' ' + ${#authentication.principal.displayName != null ? #authentication.principal.displayName : #authentication.name }">dfgfdsg</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{'/user/view/username/' + ${#authentication.name} }">Profile</a></li>
+							<li><a class="dropdown-item" th:href="@{'/token/list/' + ${#authentication.name}}">API Keys</a></li>
+							<li><a class="dropdown-item" href="#">Another action</a></li>
+						</ul></li>
+					<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 				</ul>
 			</div>
 		</nav>
 		<h1 layout:fragment="header">Layout</h1>
 		<div layout:fragment="content">Fake Content</div>
+
+		<div class="navbar navbar-default navbar-fixed-bottom">
+			<div class="container">
+				<p class="navbar-text pull-left">2020 - MQAS service</p>
+			</div>
+		</div>
 	</div>
+
 </body>
 </html>
