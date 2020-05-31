@@ -1,18 +1,18 @@
-package au.com.mqas.solr.repos;
+package au.com.mqas.loader.solr.repo;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
-import au.com.mqas.solr.domain.AddressInfo;
+import au.com.mqas.loader.solr.domain.SolrAddressInfo;
 
-public interface AddressInfoRepo extends SolrCrudRepository<AddressInfo, String> {
+public interface AddressInfoRepo extends SolrCrudRepository<SolrAddressInfo, String> {
 
 	@Query(requestHandler = "/selectAddress", value = "?0")
-	Page<AddressInfo> getAddressInfo(String str, Pageable pageable);
+	Page<SolrAddressInfo> getAddressInfo(String str, Pageable pageable);
 
 	@Query(requestHandler = "/selectAddress", value = "?0*")
-	Page<AddressInfo> getAddressInfo1(String str, Pageable pageable);
+	Page<SolrAddressInfo> getAddressInfo1(String str, Pageable pageable);
 
 }

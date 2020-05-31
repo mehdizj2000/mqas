@@ -37,13 +37,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	    http
 	    	.authorizeRequests()
-	    	.antMatchers("/webjars/**", "/static/**").permitAll()
+	    	.antMatchers("/webjars/**", "/css/**", "/js/**", "/images/**").permitAll()
 	    	.antMatchers("/", "/index", "/home", "/register", "/user/confirmRegistration", "/user/resetPassword", "/user/verifyPassword", "/forgotPassword").permitAll()
 	    	.antMatchers("/user/delete/*").hasRole("ADMIN")
 	    	.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
 	    	.anyRequest().authenticated()
 	    	.and()
-	    	.formLogin().loginPage("/login").permitAll().loginProcessingUrl("/doLogin")
+		    .formLogin().loginPage("/login").permitAll().loginProcessingUrl(
+			    "/doLogin")/* .defaultSuccessUrl("/", true) */
 	    	.and()
 	    	.logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/")
 	    	.and()

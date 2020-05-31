@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class AddressController {
 	private Pageable pageable;
 
 	@GetMapping("/api/getAddress/{terms}")
+	@CrossOrigin(origins = "http://127.0.0.1:8892")
 	public List<AddressInfo> findAddress(@PathVariable(name = "terms") String... terms) {
 
 		Stream<String> queryStream = Stream.of(terms);

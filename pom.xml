@@ -30,6 +30,7 @@
 		<module>mqas-web-service</module>
 		<module>mqas-web-business</module>
 		<module>mqas-solr-api</module>
+		<module>mqas-solr-data-loader</module>
 	</modules>
 
 	<dependencyManagement>
