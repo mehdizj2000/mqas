@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solr-spring-app-config
+data:
+  batchJDBCUrl: "jdbc:postgresql://postgres-0.postgres-srv:5432/postgres?currentSchema=batchstuff"
+  gnafJDBCUrl: "jdbc:postgresql://postgres-0.postgres-srv:5432/postgres?currentSchema=gnaf_home"
+  webJDBCUrl: "jdbc:postgresql://postgres-0.postgres-srv:5432/postgres?currentSchema=mqas_test"
+  solrApiUrl: "http://127.0.0.1:8595/api/getAddress/"
+  

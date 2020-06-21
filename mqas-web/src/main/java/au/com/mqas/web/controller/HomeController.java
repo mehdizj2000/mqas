@@ -3,6 +3,7 @@ package au.com.mqas.web.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +26,13 @@ public class HomeController {
 	private PasswordEncoder passwordEncoder;
 
 	private UserInfoBusiness userInfoBusiness;
+	
+	@Value("${mqas.solr.api.url}")
+	private String apiUrl;
 
 	@GetMapping({ "", "index", "home" })
 	public String home(Model model) {
+		model.addAttribute("apiUrl", apiUrl);
 		return "index";
 	}
 

@@ -3,6 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Users: view all</title>
+<script type="text/javascript">
+$(document)
+.ready(
+		function() {
+			// the custom
+			var addresses = new Bloodhound({
+				datumTokenizer : Bloodhound.tokenizers.whitespace,
+				queryTokenizer : Bloodhound.tokenizers.whitespace,
+				remote : {
+					url : '[[${apiUrl}]]',
+//					url : '#{solr.api.url}',
+					prepare : function(query, settings) {
+						settings.url = this.url
+								+ query.trim().replace(/\W+/g, ',');
+						console.log(settings.url);
+						return settings;
+					}
+				}
+			});
+
+			$('#the-custom .typeahead')
+					.typeahead(
+							{
+								hint : true,
+								highlight : true,
+								minLength : 5
+							},
+							{
+								name : 'addresses',
+								source : addresses,
+								display : function(item) {
+									return item.flatType + ' '
+											+ item.flatNumber + '/'
+											+ item.numberFirst + ' '
+											+ item.streetName + ' '
+											+ item.streetTypeCode + ' '
+											+ item.localityName + ' '
+											+ item.postcode + ' '
+											+ item.stateAbbreviation;
+								},
+								templates : {
+									empty : [
+											'<div class="empty-message">',
+											'unable to find any Best Picture winners that match the current query',
+											'</div>' ].join('\n'),
+									suggestion : Handlebars
+											.compile('<div>{{flatType}} {{flatNumber}}/{{numberFirst}} {{streetName}} {{streetTypeCode}} {{localityName}} {{postcode}} {{stateAbbreviation}}</div>')
+								}
+							});
+
+		});
+</script>
+
 </head>
 <body>
 	<h1 layout:fragment="header">MQAS INFO</h1>
@@ -19,6 +72,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 
+				<div th:text='${apiUrl}'></div>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Metus aliquam eleifend mi in nulla
 					posuere sollicitudin. Id leo in vitae turpis. Feugiat in fermentum posuere urna nec tincidunt praesent semper feugiat. Vulputate odio ut enim blandit volutpat
 					maecenas. Sociis natoque penatibus et magnis dis parturient montes nascetur. Consectetur libero id faucibus nisl tincidunt eget. Iaculis urna id volutpat lacus laoreet
@@ -54,6 +108,5 @@
 		</div>
 
 	</div>
-
 </body>
 </html>

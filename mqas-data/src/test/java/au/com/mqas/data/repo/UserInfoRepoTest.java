@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Slf4j
 @Sql("/data.sql")
+@Disabled
 public class UserInfoRepoTest {
 
 	@Autowired

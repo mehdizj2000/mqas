@@ -1,0 +1,37 @@
+FROM openjdk:8-jdk
+
+ARG APP_PORT="5536"
+ARG SPRING_BATCH_DATASOURCE_URL="jdbc:postgresql://pgress:5432/postgres?currentSchema=batchstuff"
+ARG SPRING_DATASOURCE_URL="jdbc:postgresql://pgress:5432/postgres?currentSchema=gnaf_home"
+ARG SPRING_BATCH_DATASOURCE_PASSWORD="123456"
+ARG SPRING_DATASOURCE_PASSWORD="123456"
+ARG GNAF_ZK-SERVERS="node01:2181,node02:2181,node03:2181"
+
+VOLUME /tmp
+
+ENV APP_USER="mehdi" \
+    APP_UID=$APP_PORT \
+    APP_GROUP="mehdi" \
+    APP_GID=$APP_PORT \
+    APP_WORKING_DIR="/opt/appdir/" \
+    SPRING_BATCH_DATASOURCE_URL="$SPRING_BATCH_DATASOURCE_URL" \
+    SPRING_BATCH_DATASOURCE_PASSWORD="$SPRING_BATCH_DATASOURCE_PASSWORD" \
+    SPRING_DATASOURCE_URL="$SPRING_DATASOURCE_URL" \
+    SPRING_DATASOURCE_PASSWORD="$SPRING_DATASOURCE_PASSWORD" \
+    GNAF_ZK-SERVERS="$GNAF_ZK-SERVERS"
+
+RUN set -ex; \
+  groupadd -r --gid "$APP_GID" "$APP_GROUP"; \
+  useradd -r --uid "$APP_UID" --gid "$APP_GID" "$APP_USER"; \
+  usermod -aG root "$APP_USER"; \
+  mkdir "$APP_WORKING_DIR"; \
+  chown -R "$APP_USER":"$APP_GROUP" "$APP_WORKING_DIR" 
+
+WORKDIR "$APP_WORKING_DIR"
+
+USER "$APP_USER" 
+
+ARG JAR_FILE=target/mqas-solr-data-loader-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT ["java"]
+CMD ["-jar","app.jar"]

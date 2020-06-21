@@ -72,7 +72,7 @@ public class BatchApplicationConfig {
 	 	return new JpaPagingItemReaderBuilder<AddressInfo>()
 	 			.name("addReader")
 	 			.entityManagerFactory(emf)
-	 			.maxItemCount(2000)
+//	 			.maxItemCount(2000)
 	 			.queryString("select f from AddressInfo f")
 	 			.pageSize(1000)
 	 		.build();

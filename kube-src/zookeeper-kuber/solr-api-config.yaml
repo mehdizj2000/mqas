@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: solr-api-srv
+  labels:
+    app: solr-api
+spec:
+  ports:
+    - port: 8595
+  selector:
+    app: solr-api
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr-api
+  labels:
+    app: solr-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: solr-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: solr-api
+    spec:
+      containers:
+      - image: mehdizj2000/solr-api
+        name: solr-api
+        env:
+        - name: GNAF_ZK-SERVERS
+          valueFrom: 
+            configMapKeyRef: 
+              name: solr-cluster-config
+              key: zkHost
+

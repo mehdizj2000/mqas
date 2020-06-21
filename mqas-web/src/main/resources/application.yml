@@ -1,6 +1,9 @@
 mqas:
   web:
     url: http://127.0.0.1:${server.port}/
+  solr:
+    api:
+      url: http://127.0.0.1:8595/api/getAddress/  
 server:
   port: 8892
 spring:
