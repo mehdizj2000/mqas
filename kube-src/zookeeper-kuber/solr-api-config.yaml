@@ -9,7 +9,19 @@ spec:
     - port: 8595
   selector:
     app: solr-api
-  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: solr-web-srv
+  labels:
+    app: solr-web
+spec:
+  ports:
+    - port: 8892
+  selector:
+    app: solr-web
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17,6 +29,7 @@ metadata:
   name: solr-api
   labels:
     app: solr-api
+    tier: my-app
 spec:
   replicas: 3
   selector:
@@ -28,6 +41,7 @@ spec:
     metadata:
       labels:
         app: solr-api
+        tier: my-app
     spec:
       containers:
       - image: mehdizj2000/solr-api
@@ -38,4 +52,43 @@ spec:
             configMapKeyRef: 
               name: solr-cluster-config
               key: zkHost
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr-web
+  labels:
+    app: solr-web
+    tier: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: solr-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: solr-web
+        tier: my-app
+    spec:
+      containers:
+      - image: mehdizj2000/solr-web-front
+        name: solr-web
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom: 
+            configMapKeyRef: 
+              name: solr-spring-app-config
+              key: webJDBCUrl 
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: MQAS_SOLR_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: solr-spring-app-config
+              key: solrApiUrl
