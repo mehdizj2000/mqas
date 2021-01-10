@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "gnaf.zk-servers",
+  "type": "java.lang.String",
+  "description": "A description for 'gnaf.zk-servers'"
+}]}
