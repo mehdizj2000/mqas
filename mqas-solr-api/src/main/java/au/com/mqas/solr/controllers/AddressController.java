@@ -23,7 +23,7 @@ public class AddressController {
 	private Pageable pageable;
 
 	@GetMapping("/api/getAddress/{terms}")
-	@CrossOrigin(origins = "http://127.0.0.1:8892")
+	@CrossOrigin(origins = "*")
 	public List<AddressInfo> findAddress(@PathVariable(name = "terms") String... terms) {
 
 		Stream<String> queryStream = Stream.of(terms);

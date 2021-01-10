@@ -1,14 +1,12 @@
 $(document)
 		.ready(
 				function() {
-					alert('[[${apiUrl}]]');
-
 					// the custom
 					var addresses = new Bloodhound({
 						datumTokenizer : Bloodhound.tokenizers.whitespace,
 						queryTokenizer : Bloodhound.tokenizers.whitespace,
 						remote : {
-							url : 'http://127.0.0.1:8595/api/getAddress/',
+							url : '/api/getAddress/',
 //							url : '#{solr.api.url}',
 							prepare : function(query, settings) {
 								settings.url = this.url

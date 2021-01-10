@@ -38,7 +38,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http
 	    	.authorizeRequests()
 	    	.antMatchers("/webjars/**", "/css/**", "/js/**", "/images/**").permitAll()
-	    	.antMatchers("/", "/index", "/home", "/register", "/user/confirmRegistration", "/user/resetPassword", "/user/verifyPassword", "/forgotPassword").permitAll()
+	    	.antMatchers("/", "/index", "/home", "/register", "/user/confirmRegistration", "/user/resetPassword", "/user/verifyPassword", "/forgotPassword", "/api/getAddress/**").permitAll()
 	    	.antMatchers("/user/delete/*").hasRole("ADMIN")
 	    	.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
 	    	.anyRequest().authenticated()
