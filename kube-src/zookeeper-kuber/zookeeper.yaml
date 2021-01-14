@@ -10,20 +10,9 @@ spec:
     name: server
   - port: 3888
     name: leader-election
-  clusterIP: None
-  selector:
-    app: zk
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: zk-cs
-  labels:
-    app: zk
-spec:
-  ports:
   - port: 2181
     name: client
+  clusterIP: None
   selector:
     app: zk
 ---
@@ -80,6 +69,10 @@ spec:
           name: server
         - containerPort: 3888
           name: leader-election
+        resources:
+          requests:
+            memory: "1G"
+            cpu: 0.5
         command:
         - sh
         - -c
@@ -94,7 +87,7 @@ spec:
           --tick_time=2000 \
           --init_limit=10 \
           --sync_limit=5 \
-          --heap=512M \
+          --heap=1G \
           --max_client_cnxns=60 \
           --snap_retain_count=3 \
           --purge_interval=12 \

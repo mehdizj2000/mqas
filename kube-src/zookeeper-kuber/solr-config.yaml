@@ -5,6 +5,6 @@ metadata:
 data:
   solrHome: "/store/data"
   solrPort: "8983"
-  zkHost: "zk-0.zk-hs.default.svc.cluster.local:2181,zk-1.zk-hs.default.svc.cluster.local:2181,zk-2.zk-hs.default.svc.cluster.local:2181"
+  zkHost: "zk-0.zk-hs:2181,zk-1.zk-hs:2181,zk-2.zk-hs:2181"
   solrLogsDir: /store/logs
-  solrHeap: "1g"
+  solrHeap: "4G"

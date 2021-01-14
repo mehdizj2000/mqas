@@ -32,7 +32,7 @@ spec:
   selector:
     matchLabels:
       app: solr-app
-  maxUnavailable: 2
+  maxUnavailable: 1
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -43,7 +43,7 @@ spec:
     matchLabels:
       app: solr-app # has to match .spec.template.metadata.labels
   serviceName: "solrcluster"
-  replicas: 5 # by default is 1
+  replicas: 3 # by default is 1
   template:
     metadata:
       labels:

@@ -2,26 +2,37 @@
 spring: 
   batch: 
     datasource: 
-      password: 123456
-      url: "jdbc:postgresql://127.0.0.1:5432/postgres?currentSchema=batchstuff"
-      username: postgres
+      password: ${gnaf.batch.db.pass}
+      url: "jdbc:postgresql://127.0.0.1:5432/${gnaf.batch.db.name}?currentSchema=${gnaf.batch.db.schema}"
+      username: ${gnaf.batch.db.user}
     initialize-schema: always
     job: 
       enabled: false
   datasource: 
-    password: 123456
-    url: "jdbc:postgresql://127.0.0.1:5432/postgres"
-    username: postgres
+    password: ${gnaf.db.pass}
+    url: "jdbc:postgresql://127.0.0.1:5432/${gnaf.db.name}"
+    username: ${gnaf.db.user}
   jpa: 
     generate-ddl: true
     hibernate: 
       ddl-auto: update
     properties: 
       hibernate: 
-        default_schema: gnaf_home
+        default_schema: ${gnaf.db.schema}
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true  
 server:
   port: 5536
 gnaf:
   zk-servers: node01:2181,node02:2181,node03:2181
+  db:
+    user: postgres
+    pass: 123456
+    name: postgres
+    schema: gnaf_small
+  batch:
+    db:
+      user: postgres
+      pass: 123456
+      name: postgres
+      schema: batchstuff
