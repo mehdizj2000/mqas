@@ -66,11 +66,6 @@ spec:
             secretKeyRef: 
               name: postgres-db-data
               key: database
-        - name: GNAF_DB_SCHEMA
-          valueFrom: 
-            secretKeyRef: 
-              name: postgres-db-data
-              key: schema
         readinessProbe:
           httpGet:
             path: /actuator/health/readiness

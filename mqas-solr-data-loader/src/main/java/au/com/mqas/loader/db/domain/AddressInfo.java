@@ -18,7 +18,7 @@ import lombok.Data;
 public class AddressInfo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "address_detail_pid")
 	private String addressDetailPid;
 

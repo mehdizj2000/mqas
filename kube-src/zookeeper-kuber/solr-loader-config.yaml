@@ -5,12 +5,12 @@ metadata:
   labels:
     app: solr-loader
 spec:
+  type: NodePort
   ports:
     - port: 5536
+      nodePort: 31222
   selector:
     app: solr-loader
-    tier: mysql
-  clusterIP: None
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -29,32 +29,82 @@ spec:
       labels:
         app: solr-loader
     spec:
+      serviceAccountName: gnafdbsa
       containers:
-      - image: mehdizj2000/solr-loader
+      - name: cloud-sql-proxy
+        # It is recommended to use the latest version of the Cloud SQL proxy
+        # Make sure to update on a regular schedule!
+        image: gcr.io/cloudsql-docker/gce-proxy
+        command:
+        - "/cloud_sql_proxy"
+        
+          # If connecting from a VPC-native GKE cluster, you can use the
+          # following flag to have the proxy connect over private IP
+          # - "-ip_address_types=PRIVATE"
+    
+          # Replace DB_PORT with the port the proxy should listen on
+          # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
+        - "-instances=potent-terminal-298905:us-central1:gnaf-pg-db-02=tcp:5432"
+        securityContext:
+          # The default Cloud SQL proxy image runs as the
+          # "nonroot" user and group (uid: 65532) by default.
+          runAsNonRoot: true
+      - image: mehdizj2000/mqas-solr-data-loader
         name: solr-loader
+        ports:
+        - containerPort: 5536
         env:
-        - name: SPRING_BATCH_DATASOURCE_URL
+        - name: SPRING_JPA_GENERATE-DDL
+          value: "false"
+        - name: SPRING_JPA_HIBERNATE_DDL-AUTO
+          value: "none"
+        - name: GNAF_DB_USER
           valueFrom: 
-            configMapKeyRef: 
-              name: solr-spring-app-config
-              key: batchJDBCUrl 
-        - name: SPRING_DATASOURCE_URL
+            secretKeyRef: 
+              name: postgres-db-data
+              key: username
+        - name: GNAF_DB_PASS
           valueFrom: 
-            configMapKeyRef: 
-              name: solr-spring-app-config
-              key: gnafJDBCUrl 
-        - name: SPRING_BATCH_DATASOURCE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
+            secretKeyRef: 
+              name: postgres-db-data
               key: password
-        - name: SPRING_DATASOURCE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: password
+        - name: GNAF_DB_NAME
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: database
+        - name: GNAF_DB_SCHEMA
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: schema
         - name: GNAF_ZK-SERVERS
           valueFrom: 
             configMapKeyRef: 
               name: solr-cluster-config
               key: zkHost
+        - name: GNAF_BATCH_DB_USER
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: username
+        - name: GNAF_BATCH_DB_PASS
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: password
+        - name: GNAF_BATCH_DB_NAME
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: database
+        - name: GNAF_BATCH_DB_SCHEMA
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: batch-schema
+        - name: GNAF_DB_SCHEMA
+          valueFrom: 
+            secretKeyRef: 
+              name: postgres-db-data
+              key: schema

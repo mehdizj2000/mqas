@@ -1,6 +1,5 @@
 package au.com.mqas.loader.item.processor;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,23 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class SolrAddressConverter implements ItemProcessor<AddressInfo, SolrAddressInfo>{
-	
-	private AddressMapper addressMapper; 
+public class SolrAddressConverter implements ItemProcessor<AddressInfo, SolrAddressInfo> {
+
+	@Autowired
+	private AddressMapper addressMapper;
 
 	@Override
 	public SolrAddressInfo process(AddressInfo item) throws Exception {
 		return addressMapper.dbAddressToSolrAddress(item);
 	}
-
-	public AddressMapper getAddressMapper() {
-		return addressMapper;
-	}
-
-	@Autowired
-	public void setAddressMapper(AddressMapper addressMapper) {
-		this.addressMapper = addressMapper;
-	}
-
 
 }
